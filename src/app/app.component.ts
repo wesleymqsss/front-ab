@@ -1,11 +1,25 @@
 import { Component } from '@angular/core';
+import { PrimeNG } from 'primeng/config';
+import { SnackbarService } from './core/service/snackbar.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: false,
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'front-ab';
+  constructor(private primeng: PrimeNG) {}
+
+    ngOnInit() {
+        this.primeng.ripple.set(true);
+    }
+
+  title = 'pro-conect';
+  toggleDarkModel(){
+    const element = document.querySelector('html');
+    if(element != null){
+      element.classList.toggle('my-app-dark');
+    }
+  }
 }

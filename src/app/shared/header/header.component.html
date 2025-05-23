@@ -1,0 +1,71 @@
+<div class="card">
+     <p-toolbar>
+        <ng-template pTemplate="start">
+            <p-menubar [model]="items" />
+        </ng-template>
+        <ng-template pTemplate="end">
+            <div class="info-user">
+                <span>
+                    {{ newUserLogin.role.toLowerCase() }}
+                </span>
+                <div class="bar"></div>
+                <span>
+                    {{ newUserLogin.username }}
+                </span>
+            </div>
+            <p-button icon="pi pi-user" text size="large" />
+        </ng-template>
+    </p-toolbar>
+</div>
+
+<p-dialog header="Editar Perfil" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [(visible)]="visibleEditProfile" [style]="{ width: '40rem', height: '30rem'}">
+    <span class="text-header">{{newUserLogin.username}}</span>
+    <form [formGroup]="formUpdateUser" class="content-form">
+        <div class="input-row">
+            <label for="username" class="label-input">Usuário:</label>
+            <div class="flex items-center gap-4 mb-4 content-input">
+                <p-inputgroup>
+                    <p-inputgroup-addon>
+                        <i class="pi pi-user"></i>
+                    </p-inputgroup-addon>
+                    <input pInputText formControlName="username" id="username" class="flex-auto" autocomplete="off" />
+                </p-inputgroup>
+            </div>
+        </div>
+        <div class="input-row">
+
+            <label for="email" class="label-input">Senha: </label>
+            <div class="flex items-center gap-4  content-input">
+                <p-inputgroup>
+                    <p-inputgroup-addon>
+                        <i class="pi pi-key"></i>
+                    </p-inputgroup-addon>
+                    <input pInputText formControlName="password" id="password" type="password" class="flex-auto"
+                        autocomplete="off" />
+                </p-inputgroup>
+            </div>
+        </div>
+
+        <div class="input-row">
+            <label for="email" class="label-input">Confirmar senha:</label>
+            <div class="flex items-center gap-4 mb-8 content-input" style="padding-bottom: 6px;">
+                <p-inputgroup>
+                    <p-inputgroup-addon>
+                        <i class="pi pi-verified"></i>
+                    </p-inputgroup-addon>
+                    <input pInputText formControlName="confirmpassword" type="password" id="confirmpassword"
+                        class="flex-auto" autocomplete="off" />
+                </p-inputgroup>
+            </div>
+            <p-message
+                *ngIf="formUpdateUser.get('confirmpassword')?.errors?.['senhasDiferentes'] && formUpdateUser.get('confirmpassword')?.touched"
+                severity="error" icon="pi pi-times-circle" styleClass="mb-2">As senhas devem ser iguais.</p-message>
+        </div>
+
+    </form>
+    <div class="flex justify-end gap-2 content-button">
+        <p-button label="Cancelar" severity="secondary" (click)="closeModal()" />
+        <p-button label="Salvar Informações" (click)="submitUpdate()" />
+    </div>
+</p-dialog>
