@@ -2,7 +2,7 @@ import { Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Drawer } from 'primeng/drawer';
 import { LoginService } from '../../core/service/login.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from '../../core/service/snackbar.service';
 import { confirmarSenharIguais } from '../../validators/passwordValidators';
 import { UserDetails } from '../../core/interface/usuario';
@@ -15,6 +15,9 @@ import { UsuarioService } from '../../core/service/usuario.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+onCepBlur() {
+throw new Error('Method not implemented.');
+}
 
   @Input() userId: string = "";
   userDetails!: UserDetails;
@@ -39,6 +42,22 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
+    this.formUpdateUser = this._fb.group({
+      email: [null, [Validators.required, Validators.email]],
+      nome: [null, [Validators.required, Validators.required]],
+      tipoPerfil: [null, [Validators.required, Validators.required]],
+      cpfCnpj: [null, [Validators.required, Validators.required]],
+      cep: [null, [Validators.required, Validators.required]],
+      telefone: [null, [Validators.required, Validators.required]],
+      cidade: [null, [Validators.required, Validators.required]],
+      tipoDoacao: [null, [Validators.required, Validators.required]],
+      bairro: [null, [Validators.required, Validators.required]],
+      numero: [null, [Validators.required, Validators.required]],
+      referenciaEndereco: [null, [Validators.required, Validators.required]],
+      estado: [null, [Validators.required, Validators.required]],
+      sobreNos: [null, [Validators.required, Validators.required]],
+    });
+
     this.formUpdatePassword = this._fb.group(
       {
         currentPassword: ['', Validators.required],
@@ -127,7 +146,7 @@ export class HeaderComponent {
     })
   }
 
-  profileType(profile: number) {
+  profileType(profile: number | null) {
     if (profile === 1) {
       return "ONG";
     } else {
@@ -149,7 +168,15 @@ export class HeaderComponent {
   }
 
   closeModalProfile() {
-    this.visibleEditPassword = false
+    this.visibleEditProfile = false
+  }
+  isStep1Valid(): boolean {
+    const step1Controls = ['nome', 'email', 'cpfCnpj', 'telefone'];
+    return step1Controls.every(controlName => this.formUpdateUser.get(controlName)?.valid ?? false);
   }
 
+  isStep2Valid(): boolean {
+    const step2Controls = ['cep', 'estado', 'cidade', 'bairro', 'numero', 'referenciaEndereco'];
+    return step2Controls.every(controlName => this.formUpdateUser.get(controlName)?.valid ?? false);
+  }
 }

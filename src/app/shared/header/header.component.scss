@@ -20,7 +20,7 @@
     }
 }
 
-form {
+.content-form {
     height: 70%;
     width: 100%;
     justify-content: center;
@@ -67,4 +67,15 @@ form {
 .label-input {
     font-weight: 600;
     color: var(--p-emerald-700);
+}
+
+.alinha-se-possui-flex{
+    justify-content: center;
+    align-items: center;
+}
+
+textarea {
+    width: 100%;
+    background-color: var(--p-emerald-50);
+    border-radius: 6px;
 }

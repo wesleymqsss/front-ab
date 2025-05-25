@@ -1,16 +1,16 @@
 export interface UserDetails {
-    id: string;
-    email: string;
-    tipoPerfil: number;
-    nome: string;
-    cpfCnpj: string;
-    cep: string;
-    telefone: string;
-    cidade: string;
-    tipoDoacao: string;
-    bairro: string;
-    numero: number;
-    referenciaEndereco: string;
-    estado: string;
-    sobreNos: string;
+    id: string | null;
+    email: string | null;
+    tipoPerfil: number | null;
+    nome: string | null;
+    cpfCnpj: string | null;
+    cep: string | null;
+    telefone: string | null;
+    cidade: string | null;
+    tipoDoacao: string | null;
+    bairro: string | null;
+    numero: number | null;
+    referenciaEndereco: string | null;
+    estado: string | null;
+    sobreNos: string | null;
 }

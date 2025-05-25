@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" *ngIf="userDetails">
     <p-toolbar>
         <ng-template pTemplate="start">
             <p-menubar [model]="items" />
@@ -63,7 +63,7 @@
                 </p-inputgroup>
             </div>
             <p-message
-                *ngIf="formUpdateUser.get('confirmPassword')?.errors?.['senhasDiferentes'] && formUpdateUser.get('confirmPassword')?.touched"
+                *ngIf="formUpdatePassword.get('confirmPassword')?.errors?.['senhasDiferentes'] && formUpdatePassword.get('confirmPassword')?.touched"
                 severity="error" icon="pi pi-times-circle" styleClass="mb-2">As senhas devem ser iguais.</p-message>
 
         </div>
@@ -76,56 +76,218 @@
 
 <p-dialog *ngIf="userDetails" header="Atualizar Perfil" [modal]="true"
     [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [(visible)]="visibleEditProfile"
-    [style]="{ width: '40rem', height: '30rem'}">
+    [style]="{ width: '60rem', height: '50rem'}">
 
     <span class="text-header" autocomplete="username">{{userDetails.nome}}</span>
+    <form [formGroup]="formUpdateUser">
+        <p-stepper [value]="1" class="basis-[50rem]">
+            <p-step-list>
+                <p-step [value]="1">Informações Pessoais</p-step>
+                <p-step [value]="2">Endereço</p-step>
+                <p-step [value]="3">Detalhes Adicionais</p-step>
+            </p-step-list>
+            <p-step-panels>
+                <p-step-panel [value]="1">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="flex flex-col h-auto alinha-se-possui-flex">
+                            <div class="input-row">
+                                <label for="nome" class="label-input">Nome:</label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-user"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="nome" id="nome" type="text"
+                                            class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
 
-    <form [formGroup]="formUpdateUser" class="content-form">
-        <div class="input-row">
-            <label for="currentPassword" class="label-input">Senha Atual:</label>
-            <div class="flex items-center gap-4 mb-4 content-input">
-                <p-inputgroup>
-                    <p-inputgroup-addon>
-                        <i class="pi pi-user"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText formControlName="currentPassword" id="currentPassword" type="password"
-                        autocomplete="current-password" class="flex-auto" />
-                </p-inputgroup>
-            </div>
-        </div>
-        <div class="input-row">
+                            <div class="input-row">
+                                <label for="email" class="label-input">Email:</label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-envelope"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="email" id="email" type="email"
+                                            class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
 
-            <label for="newPassword" class="label-input">Nova Senha : </label>
-            <div class="flex items-center gap-4  content-input">
-                <p-inputgroup>
-                    <p-inputgroup-addon>
-                        <i class="pi pi-key"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText formControlName="newPassword" id="newPassword" type="password" class="flex-auto"
-                        autocomplete="new-password" />
-                </p-inputgroup>
-            </div>
-        </div>
+                            <div class="input-row">
+                                <label for="cpfCnpj" class="label-input">CPF ou CNPJ:</label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-id-card"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="cpfCnpj" id="cpfCnpj" type="text"
+                                            class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
 
-        <div class="input-row">
-            <label for="email" class="label-input">Confirmar senha:</label>
-            <div class="flex items-center gap-4  content-input" style="padding-bottom: 6px;">
-                <p-inputgroup>
-                    <p-inputgroup-addon>
-                        <i class="pi pi-verified"></i>
-                    </p-inputgroup-addon>
-                    <input pInputText formControlName="confirmPassword" type="password" id="confirmPassword"
-                        class="flex-auto" autocomplete="off" />
-                </p-inputgroup>
-            </div>
-            <p-message
-                *ngIf="formUpdateUser.get('confirmPassword')?.errors?.['senhasDiferentes'] && formUpdateUser.get('confirmPassword')?.touched"
-                severity="error" icon="pi pi-times-circle" styleClass="mb-2">As senhas devem ser iguais.</p-message>
+                            <div class="input-row">
+                                <label for="telefone" class="label-input">Telefone:</label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-phone"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="telefone" id="telefone" type="text"
+                                            class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex pt-6 justify-end">
+                            <p-button label="Próximo" icon="pi pi-arrow-right" iconPos="right"
+                                (onClick)="activateCallback(2)" [disabled]="!isStep1Valid()" />
+                        </div>
+                    </ng-template>
+                </p-step-panel>
 
-        </div>
+                <p-step-panel [value]="2">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="flex flex-col h-auto alinha-se-possui-flex">
+                            <div class="input-row">
+                                <label for="cep" class="label-input">CEP: <small>(Busca automática ao
+                                        preencher)</small></label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-map-marker"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="cep" id="cep" type="text" class="flex-auto"
+                                            (blur)="onCepBlur()" /> </p-inputgroup>
+                                </div>
+                            </div>
+
+                            <div class="input-row">
+                                <label for="estado" class="label-input">Estado: <small>(Preenchido pelo
+                                        CEP)</small></label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-map"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="estado" id="estado" type="text"
+                                            class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
+
+                            <div class="input-row">
+                                <label for="cidade" class="label-input">Cidade: <small>(Preenchido pelo
+                                        CEP)</small></label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-building"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="cidade" id="cidade" type="text"
+                                            class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
+
+                            <div class="input-row">
+                                <label for="bairro" class="label-input">Bairro: <small>(Preenchido pelo
+                                        CEP)</small></label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-home"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="bairro" id="bairro" type="text"
+                                            class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
+
+                            <div class="input-row">
+                                <label for="numero" class="label-input">Número:</label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-hashtag"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="numero" id="numero" type="text"
+                                            class="flex-auto" /> </p-inputgroup>
+                                </div>
+                            </div>
+
+                            <div class="input-row">
+                                <label for="referenciaEndereco" class="label-input">Referência:</label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-info-circle"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="referenciaEndereco" id="referenciaEndereco"
+                                            type="text" class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex pt-6 justify-between">
+                            <p-button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
+                                (onClick)="activateCallback(1)" />
+                            <p-button label="Próximo" icon="pi pi-arrow-right" iconPos="right"
+                                (onClick)="activateCallback(3)" [disabled]="!isStep2Valid()" />
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+
+                <p-step-panel [value]="3">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="flex flex-col h-auto alinha-se-possui-flex">
+                            <div class="input-row">
+                                <label for="tipoPerfil" class="label-input">Tipo de Perfil:</label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-sitemap"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="tipoPerfil" id="tipoPerfil"
+                                            placeholder="Ex: ONG ou Doador" type="text" class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
+
+                            <div class="input-row">
+                                <label for="tipoDoacao" class="label-input">Tipo de Doação Principal:</label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <p-inputgroup>
+                                        <p-inputgroup-addon>
+                                            <i class="pi pi-heart"></i>
+                                        </p-inputgroup-addon>
+                                        <input pInputText formControlName="tipoDoacao" id="tipoDoacao"
+                                            placeholder="Ex: Alimentos, Roupas, Dinheiro" type="text"
+                                            class="flex-auto" />
+                                    </p-inputgroup>
+                                </div>
+                            </div>
+
+                            <div class="input-row">
+                                <label for="sobreNos" class="label-input">Sobre (Descrição):</label>
+                                <div class="flex items-center gap-4 mb-4 content-input">
+                                    <textarea pTextarea id="over_label" formControlName="sobreNos" rows="5" cols="30"
+                                        class="h-full"></textarea> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end gap-2 content-button">
+                            <p-button label="Cancelar" severity="secondary" (click)="closeModalProfile()" />
+                            <p-button label="Salvar Informações" (click)="submitUpdate()"
+                                [disabled]="formUpdateUser.invalid" />
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+            </p-step-panels>
+        </p-stepper>
     </form>
-    <div class="flex justify-end gap-2 content-button">
-        <p-button label="Cancelar" severity="secondary" (click)="closeModalProfile()" />
-        <p-button label="Salvar Informações" (click)="submitUpdate()" />
-    </div>
+
 </p-dialog>
