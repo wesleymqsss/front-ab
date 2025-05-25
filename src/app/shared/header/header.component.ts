@@ -15,10 +15,9 @@ import { UsuarioService } from '../../core/service/usuario.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-onCepBlur() {
-throw new Error('Method not implemented.');
-}
-
+  onCepBlur() {
+    throw new Error('Method not implemented.');
+  }
   @Input() userId: string = "";
   userDetails!: UserDetails;
   newUserLogin!: any
@@ -115,12 +114,34 @@ throw new Error('Method not implemented.');
     this._usuarioService.getUserDetails(userId).subscribe({
       next: (responseUserDetails) => {
         this.userDetails = responseUserDetails;
+        this.loadValueForm(this.userDetails);
       }
     });
   }
 
-  submitUpdate() {
+  loadValueForm(userDetails: UserDetails) {
+    if (userDetails) {
+      this.formUpdateUser.patchValue({
+        email: userDetails.email,
+        nome: userDetails.nome,
+        tipoPerfil: this.profileType(userDetails.tipoPerfil),
+        cpfCnpj: userDetails.cpfCnpj,
+        cep: userDetails.cep,
+        telefone: userDetails.telefone,
+        cidade: userDetails.cidade,
+        tipoDoacao: userDetails.tipoDoacao,
+        bairro: userDetails.bairro,
+        numero: userDetails.numero,
+        referenciaEndereco: userDetails.referenciaEndereco,
+        estado: userDetails.estado,
+        sobreNos: userDetails.sobreNos
+      });
+    } else {
+      console.warn('UserDetails ainda não disponível para popular o formulário.');
+    }
+  }
 
+  submitUpdatePassword() {
     if (this.formUpdatePassword.invalid) {
       this._snackbarService.showContrast("Favor, verificar se todos os campos estão preenchidos corretamente.");
       this.formUpdatePassword.markAllAsTouched();
@@ -146,13 +167,34 @@ throw new Error('Method not implemented.');
     })
   }
 
-  profileType(profile: number | null) {
-    if (profile === 1) {
-      return "ONG";
-    } else {
-      return "Doador";
+  submitUpdateUserDetails() {
+    if (this.formUpdateUser.invalid) {
+      this._snackbarService.showContrast("Favor, verificar se todos os campos estão preenchidos corretamente.");
+      return;
     }
+
+    const formValue = this.formUpdateUser.value;
+    let transformNumber = Number(formValue.numero);
+
+    const updateUserDetails = {
+      email: formValue.email,
+      nome: formValue.nome,
+      tipoPerfil: this.userDetails.tipoPerfil,
+      cpfCnpj: formValue.cpfCnpj,
+      cep: formValue.cep,
+      telefone: formValue.telefone,
+      cidade: formValue.cidade,
+      tipoDoacao: formValue.tipoDoacao,
+      bairro: formValue.bairro,
+      numero: transformNumber,
+      referenciaEndereco: formValue.referenciaEndereco,
+      estado: formValue.estado,
+      sobreNos: formValue.sobreNos
+    }
+
+     console.log("Objeto para requisição:", updateUserDetails);
   }
+
   showDialogPassword() {
     this.visibleEditPassword = true;
   }
@@ -178,5 +220,13 @@ throw new Error('Method not implemented.');
   isStep2Valid(): boolean {
     const step2Controls = ['cep', 'estado', 'cidade', 'bairro', 'numero', 'referenciaEndereco'];
     return step2Controls.every(controlName => this.formUpdateUser.get(controlName)?.valid ?? false);
+  }
+
+  profileType(profile: number | null) {
+    if (profile === 1) {
+      return "ONG";
+    } else {
+      return "Doador";
+    }
   }
 }

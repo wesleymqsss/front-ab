@@ -70,7 +70,7 @@
     </form>
     <div class="flex justify-end gap-2 content-button">
         <p-button label="Cancelar" severity="secondary" (click)="closeModalPassword()" />
-        <p-button label="Salvar Informações" (click)="submitUpdate()" />
+        <p-button label="Salvar Informações" (click)="submitUpdatePassword()" />
     </div>
 </p-dialog>
 
@@ -153,8 +153,7 @@
                     <ng-template #content let-activateCallback="activateCallback">
                         <div class="flex flex-col h-auto alinha-se-possui-flex">
                             <div class="input-row">
-                                <label for="cep" class="label-input">CEP: <small>(Busca automática ao
-                                        preencher)</small></label>
+                                <label for="cep" class="label-input">CEP:</label>
                                 <div class="flex items-center gap-4 mb-4 content-input">
                                     <p-inputgroup>
                                         <p-inputgroup-addon>
@@ -166,8 +165,7 @@
                             </div>
 
                             <div class="input-row">
-                                <label for="estado" class="label-input">Estado: <small>(Preenchido pelo
-                                        CEP)</small></label>
+                                <label for="estado" class="label-input">Estado: </label>
                                 <div class="flex items-center gap-4 mb-4 content-input">
                                     <p-inputgroup>
                                         <p-inputgroup-addon>
@@ -180,8 +178,7 @@
                             </div>
 
                             <div class="input-row">
-                                <label for="cidade" class="label-input">Cidade: <small>(Preenchido pelo
-                                        CEP)</small></label>
+                                <label for="cidade" class="label-input">Cidade: </label>
                                 <div class="flex items-center gap-4 mb-4 content-input">
                                     <p-inputgroup>
                                         <p-inputgroup-addon>
@@ -194,8 +191,7 @@
                             </div>
 
                             <div class="input-row">
-                                <label for="bairro" class="label-input">Bairro: <small>(Preenchido pelo
-                                        CEP)</small></label>
+                                <label for="bairro" class="label-input">Bairro: </label>
                                 <div class="flex items-center gap-4 mb-4 content-input">
                                     <p-inputgroup>
                                         <p-inputgroup-addon>
@@ -214,7 +210,7 @@
                                         <p-inputgroup-addon>
                                             <i class="pi pi-hashtag"></i>
                                         </p-inputgroup-addon>
-                                        <input pInputText formControlName="numero" id="numero" type="text"
+                                        <input pInputText formControlName="numero" id="numero" type="number"
                                             class="flex-auto" /> </p-inputgroup>
                                 </div>
                             </div>
@@ -245,19 +241,6 @@
                     <ng-template #content let-activateCallback="activateCallback">
                         <div class="flex flex-col h-auto alinha-se-possui-flex">
                             <div class="input-row">
-                                <label for="tipoPerfil" class="label-input">Tipo de Perfil:</label>
-                                <div class="flex items-center gap-4 mb-4 content-input">
-                                    <p-inputgroup>
-                                        <p-inputgroup-addon>
-                                            <i class="pi pi-sitemap"></i>
-                                        </p-inputgroup-addon>
-                                        <input pInputText formControlName="tipoPerfil" id="tipoPerfil"
-                                            placeholder="Ex: ONG ou Doador" type="text" class="flex-auto" />
-                                    </p-inputgroup>
-                                </div>
-                            </div>
-
-                            <div class="input-row">
                                 <label for="tipoDoacao" class="label-input">Tipo de Doação Principal:</label>
                                 <div class="flex items-center gap-4 mb-4 content-input">
                                     <p-inputgroup>
@@ -279,9 +262,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex justify-end gap-2 content-button">
+                        <div class="flex justify-end gap-2 content-button-more-margin">
                             <p-button label="Cancelar" severity="secondary" (click)="closeModalProfile()" />
-                            <p-button label="Salvar Informações" (click)="submitUpdate()"
+                            <p-button label="Salvar Informações" (click)="submitUpdateUserDetails()"
                                 [disabled]="formUpdateUser.invalid" />
                         </div>
                     </ng-template>

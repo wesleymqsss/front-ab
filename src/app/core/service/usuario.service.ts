@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environments';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserDetails } from '../interface/usuario';
 
@@ -13,7 +13,12 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  getUserDetails(userId: string):  Observable<UserDetails>{
+  getUserDetails(userId: string): Observable<UserDetails> {
     return this.http.get<UserDetails>(`${this.url}/` + userId)
+  }
+
+  userDetailsUpdate(id: string, responseBody: UserDetails): Observable<UserDetails> {
+    const urlId = `${this.url}/${id}`
+    return this.http.put<UserDetails>(urlId, responseBody);
   }
 }
