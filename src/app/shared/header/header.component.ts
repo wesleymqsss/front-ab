@@ -1,11 +1,12 @@
 import { Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Drawer } from 'primeng/drawer';
-import { UserLogin } from '../../core/interface/userLogin';
 import { LoginService } from '../../core/service/login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from '../../core/service/snackbar.service';
 import { confirmarSenharIguais } from '../../validators/passwordValidators';
+import { UserDetails } from '../../core/interface/usuario';
+import { UsuarioService } from '../../core/service/usuario.service';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,9 @@ import { confirmarSenharIguais } from '../../validators/passwordValidators';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  @Input() userLogin!: UserLogin;
+  @Input() userId: string = "";
+  userDetails!: UserDetails;
+
   newUserLogin!: any
   items: MenuItem[] | undefined;
   visible: boolean = false;
@@ -25,6 +28,7 @@ export class HeaderComponent {
   constructor(
     private _fb: FormBuilder,
     private _loginService: LoginService,
+    private _usuarioService: UsuarioService,
     private _snackbarService: SnackbarService) {
   }
 
@@ -33,60 +37,69 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
-    this.formUpdateUser = this._fb.group(
-      {
-        username: [this.newUserLogin.username, Validators.required],
-        password: ['', Validators.required],
-        confirmpassword: ['', Validators.required],
-      },
-      {
-        validators: confirmarSenharIguais('password', 'confirmpassword')
-      }
-    );
+    // this.formUpdateUser = this._fb.group(
+    //   {
+    //     username: [this.newUserLogin.username, Validators.required],
+    //     password: ['', Validators.required],
+    //     confirmpassword: ['', Validators.required],
+    //   },
+    //   {
+    //     validators: confirmarSenharIguais('password', 'confirmpassword')
+    //   }
+    // );
 
-    this.items = [
-      {
-        label: 'Home',
-        icon: 'pi pi-home',
-        routerLink: ['/home/' + this.newUserLogin.id]
-      },
-      {
-        label: 'Contact',
-        icon: 'pi pi-envelope'
-      },
-      {
-        label: 'Perfil',
-        icon: 'pi pi-search',
-        items: [
-          {
-            label: 'Blocks',
-            icon: 'pi pi-server'
-          },
-          {
-            label: 'Atualizar Perfil',
-            icon: 'pi pi-user-edit',
-            command: () => this.showDialog()
-          },
-          {
-            label: 'Sair',
-            icon: 'pi pi-sign-out',
-            routerLink: ['/']
+    // this.items = [
+    //   {
+    //     label: 'Home',
+    //     icon: 'pi pi-home',
+    //     routerLink: ['/home/' + this.newUserLogin.id]
+    //   },
+    //   {
+    //     label: 'Contact',
+    //     icon: 'pi pi-envelope'
+    //   },
+    //   {
+    //     label: 'Perfil',
+    //     icon: 'pi pi-search',
+    //     items: [
+    //       {
+    //         label: 'Blocks',
+    //         icon: 'pi pi-server'
+    //       },
+    //       {
+    //         label: 'Atualizar Perfil',
+    //         icon: 'pi pi-user-edit',
+    //         command: () => this.showDialog()
+    //       },
+    //       {
+    //         label: 'Sair',
+    //         icon: 'pi pi-sign-out',
+    //         routerLink: ['/']
 
-          },
-        ]
-      },
-    ]
+    //       },
+    //     ]
+    //   },
+    // ]
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['userLogin'] && changes['userLogin'].currentValue) {
+    if (changes['userId'] && changes['userId'].currentValue) {
       this.newUserLogin = (changes['userLogin'].currentValue);
-
+      this.getUserDetails(this.userId);
     }
   }
 
   showDialog() {
     this.visibleEditProfile = true;
+  }
+
+  getUserDetails(userId: string) {
+   this._usuarioService.getUserDetails(userId).subscribe({
+    next: (responseUserDetails) => {
+      this.userDetails = responseUserDetails;
+      console.log(this.userDetails)
+    }
+   })
   }
 
   submitUpdate() {

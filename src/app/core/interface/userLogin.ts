@@ -7,3 +7,14 @@ export interface UserLogin {
         role: string
     }
 }
+
+export interface Login {
+    email: string,
+    senha:  string
+}
+
+export interface Logged {
+    token: string,
+    email: string,
+    id: string
+}

@@ -43,13 +43,15 @@ export class Grafico2Component {
             ],
             borderColor: ['rgb(249, 115, 22)', 'rgb(6, 182, 212)', 'rgb(107, 114, 128)', 'rgb(139, 92, 246)'],
             borderWidth: 1,
+            barPercentage: 1.0, 
+            categoryPercentage: 0.8
           },
         ],
       };
 
       this.basicOptions = {
-        maintainAspectRatio: false,  // Importante para garantir que o gráfico seja redimensionado
-        responsive: true,            // O gráfico será responsivo
+        maintainAspectRatio: false,  
+        responsive: true,          
         aspectRatio: 0.7,
         plugins: {
           legend: {

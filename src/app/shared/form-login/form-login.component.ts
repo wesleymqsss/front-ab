@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../../core/service/login.service';
-import { UserLogin } from '../../core/interface/userLogin';
+import { Logged, Login, UserLogin } from '../../core/interface/userLogin';
 import { SnackbarService } from '../../core/service/snackbar.service';
 import { Router } from '@angular/router';
 
@@ -12,15 +12,15 @@ import { Router } from '@angular/router';
   styleUrl: './form-login.component.scss'
 })
 export class FormLoginComponent {
-  userLogin!: UserLogin;
-
+  userLogged!: Logged;
+  
   constructor(
     private readonly _userLoginService: LoginService,
     private readonly _snackbarService: SnackbarService,
     private readonly _router: Router
-    ) { }
+  ) { }
 
-  name: string = '';
+  password: string = '';
 
   email: string = '';
 
@@ -30,31 +30,39 @@ export class FormLoginComponent {
 
   load() {
     this.loading = true;
-    setTimeout(() => {
-      if (this.accept !== false) {
-        this.getUserLogin();
-      } else {
-        console.log('sou o termo de falso', this.accept);
-        this._snackbarService.showWarn('Favor, aceitar termos de uso!');
-      }
 
+    if (this.accept !== false) {
+      this.getUserLogin();
+    } else {
+      console.log('sou o termo de falso', this.accept);
+      this._snackbarService.showWarn('Favor, aceitar termos de uso!');
       this.loading = false
-    }, 2000);
+    }
   }
 
   getUserLogin() {
-      console.log('sou o termo de verdadeiro', this.accept);
-      this._userLoginService.getUserLogin(this.name, this.email).subscribe({
-        next: (responseUserLogin) => {
-          this.userLogin = responseUserLogin;
-          this.redirect(this.userLogin.user.id);
-        }, error: (err) => {
-          this._snackbarService.showError('Usuário não encontrado. Favor, verificar dados de login!');
-        }
-      })
+    console.log('tentado logar com email', this.email);
+    this.loading = true;
+
+    const credentials : Login = {
+      email: this.email,
+      senha: this.password
+    }
+
+    this._userLoginService.getUserLogin(credentials).subscribe({
+      next: (responseUserLogin) => {
+        this.userLogged = responseUserLogin;
+        this.redirect(this.userLogged.id);
+        this.loading = false;
+      }, error: (err) => {
+        console.error('error login' , err);
+        this._snackbarService.showError('Usuário não encontrado. Favor, verificar dados de login!');
+        this.loading = false;
+      }
+    })
   }
 
-  redirect(idUser: number){
-    this._router.navigate(['/home', idUser]);
+  redirect(id: string) {
+    this._router.navigate(['/home', id]);
   }
 }

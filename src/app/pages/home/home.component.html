@@ -1,82 +1,43 @@
-<app-header *ngIf="userLogin" [userLogin]="userLogin"></app-header>
+<app-header *ngIf="!userId" [userId]="userId"></app-header>
 <div class="cont-pai-panel">
   <div class="cont-header-panel">
-    <app-card-dashboard
-      *ngFor="let cardItem of cards"
-      [title]="cardItem.title"
-      [value]="cardItem.value"
-      [icon]="cardItem.icon"
-    ></app-card-dashboard>
+    <app-card-dashboard *ngFor="let cardItem of cards" [title]="cardItem.title" [value]="cardItem.value"
+      [icon]="cardItem.icon"></app-card-dashboard>
 
   </div>
   <div class="panel-container">
     <div style="display: flex; align-items: center; gap: 1%; padding-top:2%; padding-bottom: 2%;">
-      <h2 class="titulo">Dashboard</h2>
-      <i
-        class="pi pi pi-users"
-        style="font-size: 2.5rem; color: var(--p-emerald-700); margin-top: 5px"
-      ></i>
+      <h2 class="titulo">Doações Recentes</h2>
+      <i class="pi pi pi-users" style="font-size: 2.5rem; color: var(--p-emerald-700); margin-top: 5px"></i>
     </div>
 
-    <!-- <div class="cards-grafic">
-            <div class="grafic ">
-                <app-grafico-1></app-grafico-1>
-            </div>
-          
-    </div> -->
+    <div class="carrousel-cont">
+      <p-carousel [value]="doacoes" [numVisible]="4" [numScroll]="1" [circular]="true"
+        [responsiveOptions]="responsiveOptions" [autoplayInterval]="0">
 
-    <div class="cards-grafic">
-          <div class="grafic">
-                <app-grafico-2></app-grafico-2>
-            </div>
-    </div>
-
-    <!-- <div class="carrousel-cont">
-      <p-carousel
-        [value]="turmas"
-        [numVisible]="4"
-        [numScroll]="1"
-        [circular]="true"
-        [responsiveOptions]="responsiveOptions"
-        [autoplayInterval]="0"
-      >
-        <ng-template pTemplate="item" let-turma>
+        <ng-template pTemplate="item" let-doacao>
           <div class="card-wrapper">
-            <p-card
-              header="{{ turma.turma }}"
-              subheader="{{ turma.semestre }}"
-              class="card-item"
-            >
+            <p-card header="{{ doacao.doador }}" class="card-item">
               <div class="card-content">
-                <p><strong>Curso:</strong> {{ turma.curso }}</p>
+                <p><strong>Tipo de Doação:</strong> {{ doacao.tipoDoacao }}</p>
                 <p>
-                  <strong>Horário:</strong> {{ turma.horarioInicio }} -
-                  {{ turma.horarioFim }}
+                  <strong>Data:</strong> {{ doacao.dataDoacao | date: 'dd/MM/yyyy' }} <br>
+                  <strong>Hora:</strong> {{ doacao.dataDoacao | date: 'HH:mm' }}
                 </p>
-                <button
-                  pButton
-                  type="button"
-                  icon="pi pi-users"
-                  label="Ver Alunos"
-                  class="botao"
-                  (click)="onModalAlunos()"
-                ></button>
-                <button
-                  pButton
-                  type="button"
-                  icon="pi pi-file-edit"
-                  label="Criar Prova"
-                  class="botao"
-                  (click)="onModalProva()"
-                ></button>
+                <p><strong>Status:</strong> {{ doacao.statusDoacao }}</p>
+                <button pButton type="button" icon="pi pi-users" label="Ver Doador" class="botao"
+                  (click)="onModalAlunos()"></button>
+                <button pButton type="button" icon="pi pi-file-edit" label="Criar Prova" class="botao"
+                  (click)="onModalProva()"></button>
               </div>
             </p-card>
           </div>
         </ng-template>
+
       </p-carousel>
-    </div> -->
-<!-- 
-    <p-dialog
+    </div>
+
+    <!-- <p-dialog
       header="Alunos da Turma"
       [(visible)]="visible"
       [style]="{ width: '50vw' }"
@@ -119,5 +80,6 @@
         </p-table>
       </div>
     </p-dialog> -->
+
   </div>
 </div>
