@@ -17,18 +17,18 @@
 
         <ng-template pTemplate="item" let-doacao>
           <div class="card-wrapper">
-            <p-card header="{{ doacao.doador }}" class="card-item">
+            <p-card header="{{ doacao.doador | truncate:30 }}" class="card-item">
               <div class="card-content">
                 <p><strong>Tipo de Doação:</strong> {{ doacao.tipoDoacao }}</p>
                 <p>
                   <strong>Data:</strong> {{ doacao.dataDoacao | date: 'dd/MM/yyyy' }} <br>
                   <strong>Hora:</strong> {{ doacao.dataDoacao | date: 'HH:mm' }}
                 </p>
-                <p><strong>Status:</strong> {{ doacao.statusDoacao }}</p>
-                <button pButton type="button" icon="pi pi-users" label="Ver Doador" class="botao"
-                  (click)="onModalAlunos()"></button>
-                <button pButton type="button" icon="pi pi-file-edit" label="Criar Prova" class="botao"
-                  (click)="onModalProva()"></button>
+                <p class="{{typeStatusColor(doacao.statusDoacao )}}"><strong>Status:</strong> {{ doacao.statusDoacao }}</p>
+                <button pButton type="button" icon="pi pi-file-edit" label="Aceitar Doação" class="botao" 
+                  (click)="aceitarDoacao()"></button>
+                <button pButton type="button" icon="pi pi-file-edit" label="Rejeitar Doação" class="botao"  severity="danger"
+                  (click)="aceitarDoacao()"></button>
               </div>
             </p-card>
           </div>

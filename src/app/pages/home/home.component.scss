@@ -105,6 +105,7 @@
     margin-top: 2px;
 }
 
+
 .cards-grafic {
     width: 100%;
     height: 100%;
@@ -122,4 +123,34 @@
         padding: 1rem;
         padding-top: 8px;
     }
+}
+
+.button-card {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.status-pendente {
+    background-color: var(--p-button-warn-background);
+    width: 40%;
+    border-radius: 5px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.status-confirmado {
+    background-color: var(--p-button-sucess-background);
+    width: 40%;
+    border-radius: 5px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.status-cancelado {
+    background-color: var(--p-button-danger-background);
+    width: 40%;
+    border-radius: 5px;
+    text-align: center;
+    color: #ffffff;
 }

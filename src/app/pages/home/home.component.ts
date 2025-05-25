@@ -11,6 +11,10 @@ import { DoacoesService } from '../../core/service/doacoes.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+aceitarDoacao() {
+throw new Error('Method not implemented.');
+}
+
   userId!: string;
   cards!: CardDashboard[];
   responsiveOptions: any[] | undefined;
@@ -85,4 +89,17 @@ export class HomeComponent {
     this.visible = true;
   }
 
+  typeStatusColor(status: string) {
+    const classPendente = "status-pendente";
+    const classConfirmado = "status-confirmado";
+    const classCancelado = "status-cancelado";
+
+    if(status === "pendente"){
+      return classPendente;
+    } else if(status === "confirmado"){
+      return classConfirmado;
+    } else {
+      return classCancelado;
+    }
+  }
 }

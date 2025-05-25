@@ -4,6 +4,7 @@ import { MaterialModule } from '../../core/material/material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { HomeComponent } from './home.component';
     CommonModule,
     MaterialModule,
     SharedModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    PipesModule 
   ],
   exports: [
     HomeComponent
