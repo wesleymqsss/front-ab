@@ -15,13 +15,15 @@ import { UsuarioService } from '../../core/service/usuario.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+
   @Input() userId: string = "";
   userDetails!: UserDetails;
-
   newUserLogin!: any
   items: MenuItem[] | undefined;
   visible: boolean = false;
+  visibleEditPassword: boolean = false;
   visibleEditProfile: boolean = false;
+  formUpdatePassword!: FormGroup;
   formUpdateUser!: FormGroup;
   @ViewChild('drawerRef') drawerRef!: Drawer;
 
@@ -37,111 +39,117 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
-    // this.formUpdateUser = this._fb.group(
-    //   {
-    //     username: [this.newUserLogin.username, Validators.required],
-    //     password: ['', Validators.required],
-    //     confirmpassword: ['', Validators.required],
-    //   },
-    //   {
-    //     validators: confirmarSenharIguais('password', 'confirmpassword')
-    //   }
-    // );
+    this.formUpdatePassword = this._fb.group(
+      {
+        currentPassword: ['', Validators.required],
+        newPassword: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validators: confirmarSenharIguais('newPassword', 'confirmPassword')
+      }
+    );
 
-    // this.items = [
-    //   {
-    //     label: 'Home',
-    //     icon: 'pi pi-home',
-    //     routerLink: ['/home/' + this.newUserLogin.id]
-    //   },
-    //   {
-    //     label: 'Contact',
-    //     icon: 'pi pi-envelope'
-    //   },
-    //   {
-    //     label: 'Perfil',
-    //     icon: 'pi pi-search',
-    //     items: [
-    //       {
-    //         label: 'Blocks',
-    //         icon: 'pi pi-server'
-    //       },
-    //       {
-    //         label: 'Atualizar Perfil',
-    //         icon: 'pi pi-user-edit',
-    //         command: () => this.showDialog()
-    //       },
-    //       {
-    //         label: 'Sair',
-    //         icon: 'pi pi-sign-out',
-    //         routerLink: ['/']
+    this.items = [
+      {
+        label: 'Home',
+        icon: 'pi pi-home',
+        routerLink: ['/home/' + this.userId]
+      },
+      {
+        label: 'Contact',
+        icon: 'pi pi-envelope'
+      },
+      {
+        label: 'Perfil',
+        icon: 'pi pi-search',
+        items: [
+          {
+            label: 'Atualizar perfil',
+            icon: 'pi pi-server',
+            command: () => this.showDialogProfile()
+          },
+          {
+            label: 'Alterar senha',
+            icon: 'pi pi-user-edit',
+            command: () => this.showDialogPassword()
+          },
+          {
+            label: 'Sair',
+            icon: 'pi pi-sign-out',
+            routerLink: ['/']
 
-    //       },
-    //     ]
-    //   },
-    // ]
+          },
+        ]
+      },
+    ]
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['userId'] && changes['userId'].currentValue) {
-      this.newUserLogin = (changes['userLogin'].currentValue);
       this.getUserDetails(this.userId);
     }
   }
 
-  showDialog() {
-    this.visibleEditProfile = true;
-  }
 
   getUserDetails(userId: string) {
-   this._usuarioService.getUserDetails(userId).subscribe({
-    next: (responseUserDetails) => {
-      this.userDetails = responseUserDetails;
-      console.log(this.userDetails)
-    }
-   })
+    this._usuarioService.getUserDetails(userId).subscribe({
+      next: (responseUserDetails) => {
+        this.userDetails = responseUserDetails;
+      }
+    });
   }
 
   submitUpdate() {
-    const idUser = this.newUserLogin.id;
-    const role = this.newUserLogin.role;
 
-    if (this.formUpdateUser.invalid) {
+    if (this.formUpdatePassword.invalid) {
       this._snackbarService.showContrast("Favor, verificar se todos os campos estão preenchidos corretamente.");
-      this.formUpdateUser.markAllAsTouched();
+      this.formUpdatePassword.markAllAsTouched();
       return;
     }
 
     const updateUser = {
-      id: idUser,
-      username: this.formUpdateUser.get('username')?.value,
-      password: this.formUpdateUser.get('password')?.value,
-      role: role
+      email: this.userDetails.email,
+      currentPassword: this.formUpdatePassword.get('currentPassword')?.value,
+      newPassword: this.formUpdatePassword.get('newPassword')?.value,
     }
 
-    this._loginService.updateUser(idUser, updateUser).subscribe({
+    this._loginService.updatePassword(updateUser).subscribe({
       next: (data) => {
         this._snackbarService.showSuccess("Usuário atualizado com sucesso!!!");
-        this.visibleEditProfile = false;
+        this.visibleEditPassword = false;
         console.log(updateUser)
-        this.formUpdateUser.reset();
+        this.formUpdatePassword.reset();
       }, error: (err) => {
-        if (err.status === 200) {
-          this._snackbarService.showSuccess("Usuário atualizado com sucesso!!!");
-          this.visibleEditProfile = false;
-          console.log(updateUser)
-          this.formUpdateUser.reset();
-        } else {
-          this._snackbarService.showContrast("Error ao salvar alterações.")
-        }
+        this._snackbarService.showContrast("Error ao alterar senha.");
+        console.log(updateUser)
       }
     })
   }
 
-  closeModal() {
-    this.visibleEditProfile = false
-    this.formUpdateUser.get('password')?.reset();
-    this.formUpdateUser.get('confirmpassword')?.reset();
+  profileType(profile: number) {
+    if (profile === 1) {
+      return "ONG";
+    } else {
+      return "Doador";
+    }
+  }
+  showDialogPassword() {
+    this.visibleEditPassword = true;
+  }
+
+  closeModalPassword() {
+    this.visibleEditPassword = false
+    this.formUpdatePassword.get('password')?.reset();
+    this.formUpdatePassword.get('confirmpassword')?.reset();
+  }
+
+  showDialogProfile() {
+    this.visibleEditProfile = true;
+  }
+
+  closeModalProfile() {
+    this.visibleEditPassword = false
   }
 
 }

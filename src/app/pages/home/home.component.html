@@ -1,4 +1,4 @@
-<app-header *ngIf="!userId" [userId]="userId"></app-header>
+<app-header *ngIf="userId" [userId]="userId"></app-header>
 <div class="cont-pai-panel">
   <div class="cont-header-panel">
     <app-card-dashboard *ngFor="let cardItem of cards" [title]="cardItem.title" [value]="cardItem.value"

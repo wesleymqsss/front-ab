@@ -8,19 +8,19 @@ import { Logged, Login, UserLogin } from '../interface/userLogin';
   providedIn: 'root'
 })
 export class LoginService {
-  private url = `${environment.api_url}usuario/login`
+  private url = `${environment.api_url}usuario`
   
   constructor(private http : HttpClient) { }
 
   getUserLogin(user: Login ): Observable<Logged>{
-    return this.http.post<Logged>(`${this.url}`, user)
+    return this.http.post<Logged>(`${this.url}/login`, user)
   }
 
   getUserId(id: number): Observable<UserLogin>{
     return this.http.get<UserLogin>(`${this.url + id}`);
   }
 
-  updateUser(id: number, user: any): Observable<any>{
-    return this.http.put<any>(`${this.url + id}`, user)
+  updatePassword(user: any): Observable<any>{
+    return this.http.put<any>(`${this.url}/alterar-senha`, user)
   }
 }
