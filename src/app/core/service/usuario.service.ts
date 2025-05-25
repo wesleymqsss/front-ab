@@ -17,8 +17,8 @@ export class UsuarioService {
     return this.http.get<UserDetails>(`${this.url}/` + userId)
   }
 
-  userDetailsUpdate(id: string, responseBody: UserDetails): Observable<UserDetails> {
+  userDetailsUpdate(id: string, responseBody: any): Observable<any> {
     const urlId = `${this.url}/${id}`
-    return this.http.put<UserDetails>(urlId, responseBody);
+    return this.http.put<any>(urlId, responseBody);
   }
 }

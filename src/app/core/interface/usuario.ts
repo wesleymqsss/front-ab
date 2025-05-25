@@ -1,5 +1,5 @@
 export interface UserDetails {
-    id: string | null;
+    id: string;
     email: string | null;
     tipoPerfil: number | null;
     nome: string | null;

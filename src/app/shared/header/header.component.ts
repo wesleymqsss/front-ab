@@ -156,13 +156,14 @@ export class HeaderComponent {
 
     this._loginService.updatePassword(updateUser).subscribe({
       next: (data) => {
-        this._snackbarService.showSuccess("Usuário atualizado com sucesso!!!");
+        this._snackbarService.showSuccess("Senha, atualizada com sucesso!!!");
         this.visibleEditPassword = false;
         console.log(updateUser)
         this.formUpdatePassword.reset();
       }, error: (err) => {
         this._snackbarService.showContrast("Error ao alterar senha.");
         console.log(updateUser)
+        this.visibleEditPassword = false;
       }
     })
   }
@@ -192,7 +193,19 @@ export class HeaderComponent {
       sobreNos: formValue.sobreNos
     }
 
-     console.log("Objeto para requisição:", updateUserDetails);
+    console.log("Objeto para requisição:", updateUserDetails);
+
+    this._usuarioService.userDetailsUpdate(this.userDetails.id, updateUserDetails).subscribe({
+      next: (data) => {
+        this._snackbarService.showSuccess("Dados atualizados com sucesso!!!");
+        this.visibleEditProfile = false;
+        console.log(updateUserDetails)
+        
+      }, error: (err) => {
+        this._snackbarService.showContrast("Error ao alterar senha.");
+        console.log(updateUserDetails)
+      }
+    })
   }
 
   showDialogPassword() {
@@ -212,6 +225,7 @@ export class HeaderComponent {
   closeModalProfile() {
     this.visibleEditProfile = false
   }
+
   isStep1Valid(): boolean {
     const step1Controls = ['nome', 'email', 'cpfCnpj', 'telefone'];
     return step1Controls.every(controlName => this.formUpdateUser.get(controlName)?.valid ?? false);
@@ -229,4 +243,5 @@ export class HeaderComponent {
       return "Doador";
     }
   }
+
 }
