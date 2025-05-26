@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CardDashboard } from '../../core/interface/cardDashboard';
 import { CardDoacoes } from '../../core/interface/cardDoacoes';
 import { DoacoesService } from '../../core/service/doacoes.service';
+import { SnackbarService } from '../../core/service/snackbar.service';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +12,39 @@ import { DoacoesService } from '../../core/service/doacoes.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-aceitarDoacao() {
-throw new Error('Method not implemented.');
-}
+  rejeitarDoacao(id: string, statusAtual: string) {
+    const status = {
+      status: "cancelado"
+    }
+
+    if (statusAtual === status.status) {
+      this._snackbarService.showContrast("Doação já está rejeitada!");
+    } else {
+      this._doacoesService.statusAlter(id, status).subscribe({
+        next: (data) => {
+          this._snackbarService.showSuccess("Doação aceita com sucesso!");
+           window.location.reload(); 
+        }
+      });
+    }
+  }
+
+  aceitarDoacao(id: string, statusAtual: string) {
+    const status = {
+      status: "aprovado"
+    }
+
+    if (statusAtual === status.status) {
+      this._snackbarService.showContrast("Doação já está aprovada!");
+    } else {
+      this._doacoesService.statusAlter(id, status).subscribe({
+        next: (data) => {
+          this._snackbarService.showSuccess("Doação aceita com sucesso!");
+           window.location.reload(); 
+        }
+      });
+    }
+  }
 
   userId!: string;
   cards!: CardDashboard[];
@@ -23,7 +54,8 @@ throw new Error('Method not implemented.');
 
   constructor(
     private readonly _route: ActivatedRoute,
-    private readonly _doacoesService: DoacoesService
+    private readonly _doacoesService: DoacoesService,
+    private readonly _snackbarService: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -91,13 +123,13 @@ throw new Error('Method not implemented.');
 
   typeStatusColor(status: string) {
     const classPendente = "status-pendente";
-    const classConfirmado = "status-confirmado";
+    const classAprovado = "status-aprovado";
     const classCancelado = "status-cancelado";
 
-    if(status === "pendente"){
+    if (status === "pendente") {
       return classPendente;
-    } else if(status === "confirmado"){
-      return classConfirmado;
+    } else if (status === "aprovado") {
+      return classAprovado;
     } else {
       return classCancelado;
     }

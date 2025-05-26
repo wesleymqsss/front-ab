@@ -24,11 +24,11 @@
                   <strong>Data:</strong> {{ doacao.dataDoacao | date: 'dd/MM/yyyy' }} <br>
                   <strong>Hora:</strong> {{ doacao.dataDoacao | date: 'HH:mm' }}
                 </p>
-                <p class="{{typeStatusColor(doacao.statusDoacao )}}"><strong>Status:</strong> {{ doacao.statusDoacao }}</p>
+                <p class="{{ typeStatusColor(doacao.statusDoacao) }}"><strong>Status:</strong> {{ doacao.statusDoacao }}</p>
                 <button pButton type="button" icon="pi pi-file-edit" label="Aceitar Doação" class="botao" 
-                  (click)="aceitarDoacao()"></button>
+                  (click)="aceitarDoacao(doacao.id, doacao.statusDoacao)"></button>
                 <button pButton type="button" icon="pi pi-file-edit" label="Rejeitar Doação" class="botao"  severity="danger"
-                  (click)="aceitarDoacao()"></button>
+                  (click)="rejeitarDoacao(doacao.id, doacao.statusDoacao)"></button>
               </div>
             </p-card>
           </div>

@@ -8,11 +8,15 @@ import { CardDoacoes } from '../interface/cardDoacoes';
   providedIn: 'root'
 })
 export class DoacoesService {
-  private url = `${environment.api_url}doacao/usuario`
+  private url = `${environment.api_url}doacao`
 
   constructor(private http: HttpClient) { }
 
   getDoacoesCard(id: string): Observable<CardDoacoes[]> {
-    return this.http.get<CardDoacoes[]>(`${this.url}/` + id);
+    return this.http.get<CardDoacoes[]>(`${this.url}/usuario/` + id);
+  }
+
+  statusAlter(id: string, status: any): Observable<any>{
+    return this.http.patch<any>(`${this.url}/${id}/status`, status);
   }
 }
