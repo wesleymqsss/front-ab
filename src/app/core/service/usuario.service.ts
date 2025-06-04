@@ -25,4 +25,8 @@ export class UsuarioService {
   createUser(responseBody: any): Observable<any>{
     return this.http.post<any>(`${this.url}`, responseBody);
   }
+
+  getUserForProfile(profile: number): Observable<UserDetails[]>{
+    return this.http.get<UserDetails[]>(`${this.url}/por-tipo-perfil/${profile}`);
+  }
 }

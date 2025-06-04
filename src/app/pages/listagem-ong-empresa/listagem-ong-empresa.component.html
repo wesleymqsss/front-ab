@@ -7,17 +7,29 @@
                 [rowsPerPageOptions]="[5, 10, 20]">
                 <ng-template #header>
                     <tr>
-                        <th style="width:25%">Descrição</th>
-                        <th style="width:25%">Data da Avaliação</th>
-                        <th style="width:25%">Matéria</th>
-                        <th style="width:10%">Solicitar Doação</th>
+                        <th style="width:9%">Nome</th>
+                        <th style="width:9%">Email</th>
+                        <th style="width:9%">Telefone</th>
+                        <th style="width:5%">Estado</th>
+                        <th style="width:9%">Cidade</th>
+                         <th style="width:9%">Bairro</th>
+                         <th style="width:9%">Tipo de Doação</th>
+                        <th style="width:9%">Solicitar Doação</th>
                     </tr>
                 </ng-template>
                 <ng-template #body let-item>
                     <tr>
+                        <td>{{ item.nome }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.telefone }}</td>
+                        <td>{{ item.estado }}</td>
+                         <td>{{ item.cidade }}</td>
+                          <td>{{ item.bairro }}</td>
+                          <td>{{ item.tipoDoacao }}</td>
+                       
                         <td class="buttons-table">
-                            <p-button icon="pi pi-pencil" label="solicitar doação" class="mr-2" [rounded]="true" [outlined]="true"
-                                (click)="solicitarDoacao(1)" />
+                            <p-button icon="pi pi-plus" class="mr-2" [rounded]="true" [outlined]="true"
+                                (click)="solicitarDoacao(item.id)" />
                         </td>
                     </tr>
                 </ng-template>
