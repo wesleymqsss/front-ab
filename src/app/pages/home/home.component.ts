@@ -32,6 +32,19 @@ export class HomeComponent {
     private readonly _solicitacaoDoacaoService: SolicitacaoDoacaoService
   ) { }
 
+  ngOnInit() {
+    this.idUser();
+    this.obterCardsDashboard();
+    this.populandoCarrosel();
+
+    this._loginService.currentUser$.subscribe(user => {
+      if (user) {
+        console.log('Dados do usuário:', user);
+        this.getLoginId(user.id);
+      }
+    });
+
+  }
 
   rejeitarDoacao(id: string, statusAtual: string) {
     const status = {
@@ -65,20 +78,6 @@ export class HomeComponent {
         }
       });
     }
-  }
-
-  ngOnInit() {
-    this.idUser();
-    this.obterCardsDashboard();
-    this.populandoCarrosel();
-
-    this._loginService.currentUser$.subscribe(user => {
-      if (user) {
-        console.log('Dados do usuário:', user);
-        this.getLoginId(user.id);
-      }
-    });
-
   }
 
   getLoginId(id: string) {
@@ -183,9 +182,10 @@ export class HomeComponent {
     this._solicitacaoDoacaoService.deletar(id).subscribe({
       next: (data) => {
         this._snackbarService.showInfo('Solitação de doação rejeitada!');
+        window.location.reload();
       }, error: (err) => {
-        this._snackbarService.showWarn('Não foi possivel rejeitar a doação.')
+        this._snackbarService.showWarn('Não foi possivel rejeitar a doação.');
       }
     })
-}
+  }
 }

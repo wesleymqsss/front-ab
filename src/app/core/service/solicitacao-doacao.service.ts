@@ -20,6 +20,6 @@ export class SolicitacaoDoacaoService {
   }
 
   deletar(id: string): Observable<any>{
-    return this.http.get<any>(`${this.url}/${id}`)
+    return this.http.delete<any>(`${this.url}/${id}`)
   }
 }
