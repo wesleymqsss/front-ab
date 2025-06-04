@@ -3,6 +3,9 @@ import { UserDetails } from '../../core/interface/usuario';
 import { UsuarioService } from '../../core/service/usuario.service';
 import { LoginService } from '../../core/service/login.service';
 import { UserLogin } from '../../core/interface/userLogin';
+import { SolicitacaoDoacaoService } from '../../core/service/solicitacao-doacao.service';
+import { DatePicker } from 'primeng/datepicker';
+import { SnackbarService } from '../../core/service/snackbar.service';
 
 
 @Component({
@@ -18,7 +21,9 @@ export class ListagemOngEmpresaComponent {
 
   constructor(
     private readonly _usuarioService: UsuarioService,
-    private readonly _loginService: LoginService
+    private readonly _loginService: LoginService,
+    private readonly _solicitacaoDoacaoService: SolicitacaoDoacaoService,
+    private readonly _snackbarService: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -57,15 +62,45 @@ export class ListagemOngEmpresaComponent {
   }
 
   converterPerfil(perfil: any) {
-    if(perfil === 1){
+    if (perfil === 1) {
       return 'ONG';
     } else {
       return 'Doador'
     }
   }
 
-  solicitarDoacao(arg0: any) {
-    throw new Error('Method not implemented.');
+  obterDataHoraAtual() {
+    const agora = new Date();
+    const ano = agora.getFullYear();
+    const mes = String(agora.getMonth() + 1).padStart(2, '0');
+    const dia = String(agora.getDate()).padStart(2, '0');
+
+    const hora = String(agora.getHours()).padStart(2, '0');
+    const minuto = String(agora.getMinutes()).padStart(2, '0');
+    const segundo = String(agora.getSeconds()).padStart(2, '0');
+
+    return `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}`;
+  }
+
+  solicitarDoacao(id: string, tipoDoacao: string ) {
+    const dataFormatada = this.obterDataHoraAtual();
+    const value = {
+      solicitante: this.userLogin.nome,
+      tipoSolicitacao: tipoDoacao,
+      dataSolicitacao: dataFormatada
+    }
+
+    if(value){
+      this._solicitacaoDoacaoService.solicitarDoacao(id, value).subscribe({
+        next: (data) => {
+          this._snackbarService.showSuccess("Doação solicitada!");
+          console.log('valor do objeto', value);
+        }, error: (err) => {
+          this._snackbarService.showError("Erro ao solicitar doação.");
+          console.log('valor do objeto', value);
+        }
+      });
+    }
   }
 
 }

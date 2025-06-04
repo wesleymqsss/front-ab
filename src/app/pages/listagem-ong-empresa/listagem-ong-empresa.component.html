@@ -7,13 +7,13 @@
                 [rowsPerPageOptions]="[5, 10, 20]">
                 <ng-template #header>
                     <tr>
-                        <th style="width:9% ; background-color: var(--p-emerald-700) !important; color: #fff;">Nome</th>
-                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Email</th>
-                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Perfil
+                        <th style="width:13% ; background-color: var(--p-emerald-700) !important; color: #fff;">Nome</th>
+                        <th style="width:12%; background-color: var(--p-emerald-700) !important; color: #fff;">Email</th>
+                        <th style="width:4%; background-color: var(--p-emerald-700) !important; color: #fff;">Perfil
                         </th>
                         <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Telefone
                         </th>
-                        <th style="width:5%; background-color: var(--p-emerald-700) !important; color: #fff;">Estado
+                        <th style="width:4%; background-color: var(--p-emerald-700) !important; color: #fff;">Estado
                         </th>
                         <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Cidade
                         </th>
@@ -39,7 +39,7 @@
 
                         <td class="buttons-table">
                             <p-button icon="pi pi-plus" class="mr-2" [rounded]="true" [outlined]="true"
-                                (click)="solicitarDoacao(item.id)" />
+                                (click)="solicitarDoacao(item.id, item.tipoDoacao)" />
                         </td>
                     </tr>
                 </ng-template>
