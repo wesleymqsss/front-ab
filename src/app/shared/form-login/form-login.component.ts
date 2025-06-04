@@ -163,7 +163,7 @@ export class FormLoginComponent {
     return step2Controls.every(controlName => this.formUser.get(controlName)?.valid ?? false);
   }
 
-  submitUserDetails() {
+  submitUser() {
     const formValue = this.formUser.value
     if (formValue) {
       this._usuarioService.createUser(formValue).subscribe({
