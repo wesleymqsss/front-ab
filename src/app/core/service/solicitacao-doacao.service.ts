@@ -18,4 +18,8 @@ export class SolicitacaoDoacaoService {
   getSolicitacoesCard(id: string): Observable<any>{
     return this.http.get<any>(`${this.url}/${id}`);
   }
+
+  deletar(id: string): Observable<any>{
+    return this.http.get<any>(`${this.url}/${id}`)
+  }
 }

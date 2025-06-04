@@ -21,9 +21,9 @@
                         </th>
                         <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Tipo de
                             Doação</th>
-                        <th *ngIf="this.userLogin.tipoPerfil === 1" style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Solicitar
+                        <th *ngIf="userLogin?.tipoPerfil === 1" style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Solicitar
                             Doação</th>
-                            <th *ngIf="this.userLogin.tipoPerfil === 2" style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Realizar
+                            <th *ngIf="userLogin?.tipoPerfil === 2" style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Realizar
                             Doação</th>
                     </tr>
                 </ng-template>

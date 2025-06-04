@@ -14,6 +14,7 @@ import { SolicitacaoDoacaoService } from '../../core/service/solicitacao-doacao.
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+
   userLogin: any;
   userId!: string;
   cards!: CardDashboard[];
@@ -177,4 +178,14 @@ export class HomeComponent {
   routerPageList() {
     this._router.navigate(['/listagem-ong-empresa']);
   }
+
+  rejeitarPedidoDoacao(id: string) {
+    this._solicitacaoDoacaoService.deletar(id).subscribe({
+      next: (data) => {
+        this._snackbarService.showInfo('Solitação de doação rejeitada!');
+      }, error: (err) => {
+        this._snackbarService.showWarn('Não foi possivel rejeitar a doação.')
+      }
+    })
+}
 }
