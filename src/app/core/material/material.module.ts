@@ -27,7 +27,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ChartModule } from 'primeng/chart';
 import { StepperModule } from 'primeng/stepper';
 import { FloatLabel } from 'primeng/floatlabel';
-
+import { Select } from 'primeng/select';
 
 @NgModule({
   imports: [
@@ -59,11 +59,12 @@ import { FloatLabel } from 'primeng/floatlabel';
     CardModule,
     TableModule,
     DialogModule,
-     InputGroupModule,
+    InputGroupModule,
     InputGroupAddonModule,
     ChartModule,
     StepperModule,
-    FloatLabel
+    FloatLabel,
+    Select
   ],
   exports: [
     FocusTrapModule,
@@ -94,11 +95,12 @@ import { FloatLabel } from 'primeng/floatlabel';
     CardModule,
     TableModule,
     DialogModule,
-     InputGroupModule,
+    InputGroupModule,
     InputGroupAddonModule,
     ChartModule,
     StepperModule,
-    FloatLabel
+    FloatLabel,
+    Select
   ]
 })
 export class MaterialModule { }

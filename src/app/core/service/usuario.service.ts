@@ -21,4 +21,8 @@ export class UsuarioService {
     const urlId = `${this.url}/${id}`
     return this.http.put<any>(urlId, responseBody);
   }
+
+  createUser(responseBody: any): Observable<any>{
+    return this.http.post<any>(`${this.url}`, responseBody);
+  }
 }

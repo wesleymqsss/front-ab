@@ -26,6 +26,7 @@
     display: flex;
     justify-content: center;
     padding-top: 10px;
+    gap: 22px;
 }
 
 .input-component {
@@ -33,11 +34,30 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
 }
 
 p-button {
     button {
         width: 130px;
     }
+}
+
+.input-row {
+    width: 80%;
+}
+
+.label-input {
+    font-weight: 600;
+    color: var(--p-emerald-700);
+}
+
+.alinha-se-possui-flex{
+    justify-content: center;
+    align-items: center;
+}
+
+textarea {
+    width: 100%;
+    background-color: var(--p-emerald-50);
+    border-radius: 6px;
 }

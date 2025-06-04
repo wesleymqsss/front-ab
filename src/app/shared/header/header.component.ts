@@ -18,6 +18,7 @@ export class HeaderComponent {
   onCepBlur() {
     throw new Error('Method not implemented.');
   }
+
   @Input() userId: string = "";
   userDetails!: UserDetails;
   newUserLogin!: any
@@ -41,21 +42,23 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
-    this.formUpdateUser = this._fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      nome: [null, [Validators.required, Validators.required]],
-      tipoPerfil: [null, [Validators.required, Validators.required]],
-      cpfCnpj: [null, [Validators.required, Validators.required]],
-      cep: [null, [Validators.required, Validators.required]],
-      telefone: [null, [Validators.required, Validators.required]],
-      cidade: [null, [Validators.required, Validators.required]],
-      tipoDoacao: [null, [Validators.required, Validators.required]],
-      bairro: [null, [Validators.required, Validators.required]],
-      numero: [null, [Validators.required, Validators.required]],
-      referenciaEndereco: [null, [Validators.required, Validators.required]],
-      estado: [null, [Validators.required, Validators.required]],
-      sobreNos: [null, [Validators.required, Validators.required]],
-    });
+    this.formUpdateUser = this._fb.group(
+      {
+        email: [null, [Validators.required, Validators.email]],
+        nome: [null, [Validators.required, Validators.required]],
+        tipoPerfil: [null, [Validators.required, Validators.required]],
+        cpfCnpj: [null, [Validators.required, Validators.required]],
+        cep: [null, [Validators.required, Validators.required]],
+        telefone: [null, [Validators.required, Validators.required]],
+        cidade: [null, [Validators.required, Validators.required]],
+        tipoDoacao: [null, [Validators.required, Validators.required]],
+        bairro: [null, [Validators.required, Validators.required]],
+        numero: [null, [Validators.required, Validators.required]],
+        referenciaEndereco: [null, [Validators.required, Validators.required]],
+        estado: [null, [Validators.required, Validators.required]],
+        sobreNos: [null, [Validators.required, Validators.required]],
+      }
+    );
 
     this.formUpdatePassword = this._fb.group(
       {
@@ -200,7 +203,7 @@ export class HeaderComponent {
         this._snackbarService.showSuccess("Dados atualizados com sucesso!!!");
         this.visibleEditProfile = false;
         console.log(updateUserDetails)
-        
+
       }, error: (err) => {
         this._snackbarService.showContrast("Error ao alterar senha.");
         console.log(updateUserDetails)
