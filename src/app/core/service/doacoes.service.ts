@@ -19,4 +19,8 @@ export class DoacoesService {
   statusAlter(id: string, status: any): Observable<any>{
     return this.http.patch<any>(`${this.url}/${id}/status`, status);
   }
+
+   realizarDoacao(id: string, responseBody: any): Observable<any>{
+    return this.http.post<any>( `${this.url}/${id}`, responseBody)
+  }
 }

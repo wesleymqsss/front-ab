@@ -15,6 +15,9 @@ import { SnackbarService } from '../../core/service/snackbar.service';
   styleUrl: './listagem-ong-empresa.component.scss'
 })
 export class ListagemOngEmpresaComponent {
+realizarDoacao(arg0: any,arg1: any) {
+throw new Error('Method not implemented.');
+}
 
   dataSource: UserDetails[] = [];
   userLogin!: any;

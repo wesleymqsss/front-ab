@@ -21,7 +21,9 @@
                         </th>
                         <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Tipo de
                             Doação</th>
-                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Solicitar
+                        <th *ngIf="this.userLogin.tipoPerfil === 1" style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Solicitar
+                            Doação</th>
+                            <th *ngIf="this.userLogin.tipoPerfil === 2" style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Realizar
                             Doação</th>
                     </tr>
                 </ng-template>
@@ -37,9 +39,14 @@
                         <td>{{ item.tipoDoacao }}</td>
 
 
-                        <td class="buttons-table">
-                            <p-button icon="pi pi-plus" class="mr-2" [rounded]="true" [outlined]="true"
+                        <td class="buttons-table" *ngIf="this.userLogin.tipoPerfil === 1">
+                            <p-button icon="pi pi-plus" class="mr-2" [rounded]="true" [outlined]="true" 
                                 (click)="solicitarDoacao(item.id, item.tipoDoacao)" />
+                        </td>
+
+                        <td class="buttons-table" *ngIf="this.userLogin.tipoPerfil === 2">
+                            <p-button icon="pi pi-plus" class="mr-2" [rounded]="true" [outlined]="true" 
+                                (click)="realizarDoacao(item.id, item.tipoDoacao)" />
                         </td>
                     </tr>
                 </ng-template>

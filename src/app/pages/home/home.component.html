@@ -5,7 +5,7 @@
       [icon]="cardItem.icon"></app-card-dashboard>
 
   </div>
-  <div class="panel-container">
+  <div class="panel-container" *ngIf="userLogin.tipoPerfil === 1">
     <div class="container-actions display: flex; align-items: center; gap: 1%; padding-top:2%; padding-bottom: 2%;">
       <div style="width: 40%; display: flex; align-items: center; gap: 1%; padding-top:2%; padding-bottom: 2%;">
         <h2 class="titulo">Doações Recentes</h2>
@@ -19,24 +19,24 @@
     </div>
 
     <div class="carrousel-cont">
-      <p-carousel [value]="doacoes" [numVisible]="4" [numScroll]="1" [circular]="true"
+      <p-carousel [value]="dataSource" [numVisible]="4" [numScroll]="1" [circular]="true"
         [responsiveOptions]="responsiveOptions" [autoplayInterval]="0">
 
-        <ng-template pTemplate="item" let-doacao>
+        <ng-template pTemplate="item" let-item>
           <div class="card-wrapper">
-            <p-card header="{{ doacao.doador | truncate:30 }}" class="card-item">
+            <p-card header="{{ item.doador | truncate:30 }}" class="card-item">
               <div class="card-content">
-                <p><strong>Tipo de Doação:</strong> {{ doacao.tipoDoacao }}</p>
+                <p><strong>Tipo de Doação:</strong> {{ item.tipoDoacao }}</p>
                 <p>
-                  <strong>Data:</strong> {{ doacao.dataDoacao | date: 'dd/MM/yyyy' }} <br>
-                  <strong>Hora:</strong> {{ doacao.dataDoacao | date: 'HH:mm' }}
+                  <strong>Data:</strong> {{ item.dataDoacao | date: 'dd/MM/yyyy' }} <br>
+                  <strong>Hora:</strong> {{ item.dataDoacao | date: 'HH:mm' }}
                 </p>
-                <p class="{{ typeStatusColor(doacao.statusDoacao) }}"><strong>Status:</strong> {{ doacao.statusDoacao }}
+                <p class="{{ typeStatusColor(item.statusDoacao) }}"><strong>Status:</strong> {{ item.statusDoacao }}
                 </p>
                 <button pButton type="button" icon="pi pi-thumbs-up-fill" label="Aceitar Doação" class="botao"
-                  (click)="aceitarDoacao(doacao.id, doacao.statusDoacao)"></button>
+                  (click)="aceitarDoacao(item.id, item.statusDoacao)"></button>
                 <button pButton type="button" icon="pi pi-thumbs-down-fill" label="Rejeitar Doação" class="botao"
-                  severity="danger" (click)="rejeitarDoacao(doacao.id, doacao.statusDoacao)"></button>
+                  severity="danger" (click)="rejeitarDoacao(item.id, item.statusDoacao)"></button>
               </div>
             </p-card>
           </div>
@@ -45,4 +45,45 @@
       </p-carousel>
     </div>
   </div>
+
+ <div class="panel-container" *ngIf="userLogin.tipoPerfil === 2">
+    <div class="container-actions display: flex; align-items: center; gap: 1%; padding-top:2%; padding-bottom: 2%;">
+      <div style="width: 40%; display: flex; align-items: center; gap: 1%; padding-top:2%; padding-bottom: 2%;">
+        <h2 class="titulo">Solicitações Recentes</h2>
+        <i class=" pi pi-users" style="font-size: 2.5rem; color: var(--p-emerald-700); margin-top: 5px"></i>
+      </div>
+
+      <div class="button-component-list">
+         <button pButton type="button" icon="pi pi-plus" label="Solicitar Doação" class="botao"
+                  (click)="routerPageList()"></button>
+      </div>
+    </div>
+
+    <div class="carrousel-cont">
+      <p-carousel [value]="dataSource" [numVisible]="4" [numScroll]="1" [circular]="true"
+        [responsiveOptions]="responsiveOptions" [autoplayInterval]="0">
+
+        <ng-template pTemplate="item" let-item>
+          <div class="card-wrapper">
+            <p-card header="{{ item.solicitante | truncate:30 }}" class="card-item">
+              <div class="card-content">
+                <p><strong>Tipo de Doação:</strong> {{ item.tipoSolicitacao }}</p>
+                <p>
+                  <strong>Data:</strong> {{ item.dataSolicitacao | date: 'dd/MM/yyyy' }} <br>
+                  <strong>Hora:</strong> {{ item.dataSolicitacao | date: 'HH:mm' }}
+                </p>
+                
+                <button pButton type="button" icon="pi pi-thumbs-up-fill" label="Realizar Doação" class="botao"
+                  (click)="aceitarDoacao(item.id, item.statusDoacao)"></button>
+                <button pButton type="button" icon="pi pi-thumbs-down-fill" label="Rejeitar Pedido de Doação" class="botao"
+                  severity="danger" (click)="rejeitarDoacao(item.id, item.statusDoacao)"></button>
+              </div>
+            </p-card>
+          </div>
+        </ng-template>
+
+      </p-carousel>
+    </div>
+  </div>
+  
 </div>
