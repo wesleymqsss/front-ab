@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
+
 import { HomeModule } from './pages/home/home.module';
 import { providePrimeNG } from 'primeng/config';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -12,6 +12,8 @@ import { LoginModule } from './pages/login/login.module';
 import { Noir } from '../styles'; 
 import { provideHttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import { SharedModule } from './shared/shared.module';
+import { ListagemOngEmpresaModule } from './pages/listagem-ong-empresa/llistagem-ong-empresa.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { MessageService } from 'primeng/api';
     HomeModule,
     ToastModule,
     ButtonModule,
-    LoginModule
+    LoginModule,
+    ListagemOngEmpresaModule
 
   ],
   exports: [
