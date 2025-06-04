@@ -188,4 +188,39 @@ export class HomeComponent {
       }
     })
   }
+
+  obterDataHoraAtual() {
+    const agora = new Date();
+    const ano = agora.getFullYear();
+    const mes = String(agora.getMonth() + 1).padStart(2, '0');
+    const dia = String(agora.getDate()).padStart(2, '0');
+
+    const hora = String(agora.getHours()).padStart(2, '0');
+    const minuto = String(agora.getMinutes()).padStart(2, '0');
+    const segundo = String(agora.getSeconds()).padStart(2, '0');
+
+    return `${ano}-${mes}-${dia}T${hora}:${minuto}:${segundo}`;
+  }
+
+
+  realizarDoacao(id: string, tipoDoacao: string) {
+    const dataFormatada = this.obterDataHoraAtual();
+    const value = {
+      doador: this.userLogin.nome,
+      tipoDoacao: tipoDoacao,
+      dataDoacao: dataFormatada
+    }
+    if (value) {
+      this._doacoesService.realizarDoacao(id, value).subscribe({
+        next: (data) => {
+          this._snackbarService.showSuccess("Doação realizada com sucesso!");
+          console.log('valor do objeto', value);
+        }, error: (err) => {
+          this._snackbarService.showError("Erro ao finalizar doação.");
+          console.log('valor do objeto', value);
+        }
+      });
+    }
+
+  }
 }

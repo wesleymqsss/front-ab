@@ -74,7 +74,7 @@
                 </p>
                 
                 <button pButton type="button" icon="pi pi-thumbs-up-fill" label="Realizar Doação" class="botao"
-                  (click)="aceitarDoacao(item.id, item.statusDoacao)"></button>
+                  (click)="realizarDoacao(item.usuario.id, item.tipoSolicitacao)"></button>
                 <button pButton type="button" icon="pi pi-thumbs-down-fill" label="Rejeitar Pedido de Doação" class="botao"
                   severity="danger" (click)="rejeitarPedidoDoacao(item.id)"></button>
               </div>
