@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CardDashboard } from '../../core/interface/cardDashboard';
 import { CardDoacoes } from '../../core/interface/cardDoacoes';
 import { DoacoesService } from '../../core/service/doacoes.service';
@@ -12,6 +12,7 @@ import { SnackbarService } from '../../core/service/snackbar.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+
   rejeitarDoacao(id: string, statusAtual: string) {
     const status = {
       status: "cancelado"
@@ -23,7 +24,7 @@ export class HomeComponent {
       this._doacoesService.statusAlter(id, status).subscribe({
         next: (data) => {
           this._snackbarService.showSuccess("Doação aceita com sucesso!");
-           window.location.reload(); 
+          window.location.reload();
         }
       });
     }
@@ -40,7 +41,7 @@ export class HomeComponent {
       this._doacoesService.statusAlter(id, status).subscribe({
         next: (data) => {
           this._snackbarService.showSuccess("Doação aceita com sucesso!");
-           window.location.reload(); 
+          window.location.reload();
         }
       });
     }
@@ -53,9 +54,10 @@ export class HomeComponent {
   visible: boolean = false;
 
   constructor(
-    private readonly _route: ActivatedRoute,
+    private readonly _activatedRoute: ActivatedRoute,
     private readonly _doacoesService: DoacoesService,
-    private readonly _snackbarService: SnackbarService
+    private readonly _snackbarService: SnackbarService,
+    private readonly _router: Router
   ) { }
 
   ngOnInit() {
@@ -65,7 +67,7 @@ export class HomeComponent {
   }
 
   idUser() {
-    this.userId = this._route.snapshot.paramMap.get('id')!;
+    this.userId = this._activatedRoute.snapshot.paramMap.get('id')!;
     this.ultimasDoacoes(this.userId);
   }
 
@@ -133,5 +135,9 @@ export class HomeComponent {
     } else {
       return classCancelado;
     }
+  }
+
+  routerPageList() {
+   this._router.navigate(['/listagem-ong-empresa']);
   }
 }

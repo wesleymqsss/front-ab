@@ -78,8 +78,9 @@ export class HeaderComponent {
         routerLink: ['/home/' + this.userId]
       },
       {
-        label: 'Contact',
-        icon: 'pi pi-envelope'
+        label: 'Ver comunidade',
+        icon: 'pi pi pi-users',
+        routerLink: ['/listagem-ong-empresa']
       },
       {
         label: 'Perfil',

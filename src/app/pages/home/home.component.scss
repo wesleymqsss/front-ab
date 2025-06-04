@@ -48,6 +48,7 @@
 
 .style-titulo {
     color: var(--p-gray-800);
+    
 }
 
 // .card {
@@ -80,6 +81,7 @@
     text-align: center;
     color: var(--p-gray-800);
     font-weight: bold;
+    font-size: 25px;
 }
 
 .card-wrapper {
@@ -153,4 +155,11 @@
     border-radius: 5px;
     text-align: center;
     color: #ffffff;
+}
+
+.container-actions{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
