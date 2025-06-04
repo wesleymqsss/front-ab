@@ -138,7 +138,7 @@ export class FormLoginComponent {
         this._snackbarService.showError('Usuário não encontrado. Favor, verificar dados de login!');
         this.loading = false;
       }
-    })
+    });
   }
 
   openModal() {
@@ -146,7 +146,7 @@ export class FormLoginComponent {
   }
 
   closeModal() {
-    this.visibleEditProfile = false
+    this.visibleEditProfile = false;
   }
 
   redirect(id: string) {
@@ -172,7 +172,7 @@ export class FormLoginComponent {
           this.formUser.reset();
           this.closeModal();
         }, error: (err) => {
-          this._snackbarService.showError(err);
+          this._snackbarService.showError("Error ao cadastrar usuário.");
         }
       })
     } else {
