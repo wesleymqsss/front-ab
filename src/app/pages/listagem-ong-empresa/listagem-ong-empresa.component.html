@@ -1,1 +1,27 @@
-<p>listagem-ong-empresa works!</p>
+<!-- <app-header *ngIf="currentUser" [userLogin]="currentUser"></app-header> -->
+<main>
+    <div class="content">
+
+        <div class="card">
+            <p-table [value]="dataSource" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
+                [rowsPerPageOptions]="[5, 10, 20]">
+                <ng-template #header>
+                    <tr>
+                        <th style="width:25%">Descrição</th>
+                        <th style="width:25%">Data da Avaliação</th>
+                        <th style="width:25%">Matéria</th>
+                        <th style="width:10%">Solicitar Doação</th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-item>
+                    <tr>
+                        <td class="buttons-table">
+                            <p-button icon="pi pi-pencil" label="solicitar doação" class="mr-2" [rounded]="true" [outlined]="true"
+                                (click)="solicitarDoacao(1)" />
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</main>
