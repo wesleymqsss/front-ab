@@ -90,7 +90,7 @@ export class LoginService {
     );
   }
 
-  getUserId(id: number): Observable<UserLogin> { 
+  getUserId(id: string): Observable<UserLogin> { 
     return this.http.get<UserLogin>(`${this.url}/${id}`); 
   }
 
