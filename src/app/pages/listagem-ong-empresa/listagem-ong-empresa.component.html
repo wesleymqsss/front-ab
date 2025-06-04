@@ -1,4 +1,4 @@
-<!-- <app-header *ngIf="currentUser" [userLogin]="currentUser"></app-header> -->
+<app-header *ngIf="userLogin" [userId]="userLogin.id"></app-header>
 <main>
     <div class="content">
 
@@ -7,26 +7,36 @@
                 [rowsPerPageOptions]="[5, 10, 20]">
                 <ng-template #header>
                     <tr>
-                        <th style="width:9%">Nome</th>
-                        <th style="width:9%">Email</th>
-                        <th style="width:9%">Telefone</th>
-                        <th style="width:5%">Estado</th>
-                        <th style="width:9%">Cidade</th>
-                         <th style="width:9%">Bairro</th>
-                         <th style="width:9%">Tipo de Doação</th>
-                        <th style="width:9%">Solicitar Doação</th>
+                        <th style="width:9% ; background-color: var(--p-emerald-700) !important; color: #fff;">Nome</th>
+                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Email</th>
+                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Perfil
+                        </th>
+                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Telefone
+                        </th>
+                        <th style="width:5%; background-color: var(--p-emerald-700) !important; color: #fff;">Estado
+                        </th>
+                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Cidade
+                        </th>
+                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Bairro
+                        </th>
+                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Tipo de
+                            Doação</th>
+                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Solicitar
+                            Doação</th>
                     </tr>
                 </ng-template>
                 <ng-template #body let-item>
                     <tr>
                         <td>{{ item.nome }}</td>
                         <td>{{ item.email }}</td>
+                        <td>{{ converterPerfil(item.tipoPerfil )}}</td>
                         <td>{{ item.telefone }}</td>
                         <td>{{ item.estado }}</td>
-                         <td>{{ item.cidade }}</td>
-                          <td>{{ item.bairro }}</td>
-                          <td>{{ item.tipoDoacao }}</td>
-                       
+                        <td>{{ item.cidade }}</td>
+                        <td>{{ item.bairro }}</td>
+                        <td>{{ item.tipoDoacao }}</td>
+
+
                         <td class="buttons-table">
                             <p-button icon="pi pi-plus" class="mr-2" [rounded]="true" [outlined]="true"
                                 (click)="solicitarDoacao(item.id)" />

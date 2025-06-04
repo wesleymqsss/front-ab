@@ -73,10 +73,10 @@ export class HomeComponent {
 
   obterCardsDashboard() {
     this.cards = [
-      { title: 'Total de Doações', value: '35', icon: 'pi-graduation-cap' },
+      { title: 'Total de Doações', value: '35', icon: 'pi-bullseye' },
       { title: 'Total de Doacoes pendentes', value: '2', icon: 'pi-users' },
-      { title: 'Aumento em 2025', value: '8%', icon: 'pi-thumbs-up' },
-      { title: 'Meta', value: '80%', icon: 'pi-thumbs-down' },
+      { title: 'Aumento em 2025', value: '8%', icon: 'pi-chart-line' },
+      { title: 'Meta', value: '80%', icon: 'pi-chart-pie' },
     ];
   }
 

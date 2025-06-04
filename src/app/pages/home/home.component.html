@@ -33,9 +33,9 @@
                 </p>
                 <p class="{{ typeStatusColor(doacao.statusDoacao) }}"><strong>Status:</strong> {{ doacao.statusDoacao }}
                 </p>
-                <button pButton type="button" icon="pi pi-file-edit" label="Aceitar Doação" class="botao"
+                <button pButton type="button" icon="pi pi-thumbs-up-fill" label="Aceitar Doação" class="botao"
                   (click)="aceitarDoacao(doacao.id, doacao.statusDoacao)"></button>
-                <button pButton type="button" icon="pi pi-file-edit" label="Rejeitar Doação" class="botao"
+                <button pButton type="button" icon="pi pi-thumbs-down-fill" label="Rejeitar Doação" class="botao"
                   severity="danger" (click)="rejeitarDoacao(doacao.id, doacao.statusDoacao)"></button>
               </div>
             </p-card>

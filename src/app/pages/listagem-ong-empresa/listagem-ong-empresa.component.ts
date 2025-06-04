@@ -12,6 +12,7 @@ import { UserLogin } from '../../core/interface/userLogin';
   styleUrl: './listagem-ong-empresa.component.scss'
 })
 export class ListagemOngEmpresaComponent {
+
   dataSource: UserDetails[] = [];
   userLogin!: any;
 
@@ -21,8 +22,6 @@ export class ListagemOngEmpresaComponent {
   ) { }
 
   ngOnInit() {
-    this.getDataSource();
-
     this._loginService.currentUser$.subscribe(user => {
       if (user) {
         console.log('Dados do usuário:', user);
@@ -32,20 +31,37 @@ export class ListagemOngEmpresaComponent {
   }
 
   getLoginId(id: string) {
-   this._loginService.getUserId(id).subscribe({
-    next: (userLoginResponse) => {
-      this.userLogin = userLoginResponse;
-    }
-   });
+    this._loginService.getUserId(id).subscribe({
+      next: (userLoginResponse) => {
+        this.userLogin = userLoginResponse;
+        this.getDataSource();
+      }
+    });
   }
 
   getDataSource() {
-    this._usuarioService.getUserForProfile(1).subscribe({
-      next: (dataSourceResponse) => {
-        this.dataSource = dataSourceResponse;
+    if (this.userLogin.tipoPerfil === 1) {
+      this._usuarioService.getUserForProfile(2).subscribe({
+        next: (dataSourceResponse) => {
+          this.dataSource = dataSourceResponse;
+        }
+      });
+    } else {
+      this._usuarioService.getUserForProfile(1).subscribe({
+        next: (dataSourceResponse) => {
+          this.dataSource = dataSourceResponse;
+        }
+      });
+    }
 
-      }
-    });
+  }
+
+  converterPerfil(perfil: any) {
+    if(perfil === 1){
+      return 'ONG';
+    } else {
+      return 'Doador'
+    }
   }
 
   solicitarDoacao(arg0: any) {
