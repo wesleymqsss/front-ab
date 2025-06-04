@@ -7,23 +7,23 @@
                 [rowsPerPageOptions]="[5, 10, 20]">
                 <ng-template #header>
                     <tr>
-                        <th style="width:13% ; background-color: var(--p-emerald-700) !important; color: #fff;">Nome</th>
-                        <th style="width:12%; background-color: var(--p-emerald-700) !important; color: #fff;">Email</th>
-                        <th style="width:4%; background-color: var(--p-emerald-700) !important; color: #fff;">Perfil
+                        <th pSortableColumn="nome" style="width:11% ; background-color: var(--p-emerald-700) !important; color: #fff;">Nome <p-sortIcon field="nome" /></th>
+                        <th pSortableColumn="email" style="width:12%; background-color: var(--p-emerald-700) !important; color: #fff;">Email <p-sortIcon field="email"/> </th>
+                        <th pSortableColumn="tipoPerfil" style="width:6%; background-color: var(--p-emerald-700) !important; color: #fff;">Perfil <p-sortIcon field="tipoPerfil"/>
                         </th>
-                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Telefone
+                        <th pSortableColumn="telefone" style="width:10%; background-color: var(--p-emerald-700) !important; color: #fff;">Telefone <p-sortIcon field="telefone"/>
                         </th>
-                        <th style="width:4%; background-color: var(--p-emerald-700) !important; color: #fff;">Estado
+                        <th pSortableColumn="estado" style="width:8%; background-color: var(--p-emerald-700) !important; color: #fff;">Estado <p-sortIcon field="estado"/>
                         </th>
-                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Cidade
+                        <th pSortableColumn="cidade" style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Cidade <p-sortIcon field="cidade"/>
                         </th>
-                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Bairro
+                        <th pSortableColumn="bairro"  style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Bairro <p-sortIcon field="bairro"/>
                         </th>
-                        <th style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Tipo de
+                        <th pSortableColumn="tipoDoacao" style="width:12%; background-color: var(--p-emerald-700) !important; color: #fff;">Tipo de Doação <p-sortIcon field="tipoDoacao"/>
+                            </th>
+                        <th  *ngIf="userLogin?.tipoPerfil === 1" style="width:10%; background-color: var(--p-emerald-700) !important; color: #fff;">Solicitar
                             Doação</th>
-                        <th *ngIf="userLogin?.tipoPerfil === 1" style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Solicitar
-                            Doação</th>
-                            <th *ngIf="userLogin?.tipoPerfil === 2" style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Realizar
+                            <th  *ngIf="userLogin?.tipoPerfil === 2" style="width:10%; background-color: var(--p-emerald-700) !important; color: #fff;">Realizar
                             Doação</th>
                     </tr>
                 </ng-template>
