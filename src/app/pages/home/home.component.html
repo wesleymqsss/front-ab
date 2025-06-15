@@ -28,8 +28,8 @@
               <div class="card-content">
                 <p><strong>Tipo de Doação:</strong> {{ item.tipoDoacao }}</p>
                 <p>
-                  <strong>Data:</strong> {{ item.dataDoacao | date: 'dd/MM/yyyy' }} <br>
-                  <strong>Hora:</strong> {{ item.dataDoacao | date: 'HH:mm' }}
+                  <strong>Data: </strong> {{ item.dataDoacao | date: 'dd/MM/yyyy' }} <br>
+                  <strong>Hora: </strong> {{ item.dataDoacao | date: 'HH:mm' }}
                 </p>
                 <p class="{{ typeStatusColor(item.statusDoacao) }}"><strong>Status:</strong> {{ item.statusDoacao }}
                 </p>

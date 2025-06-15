@@ -7,6 +7,8 @@ import { SnackbarService } from '../../core/service/snackbar.service';
 import { confirmarSenharIguais } from '../../validators/passwordValidators';
 import { UserDetails } from '../../core/interface/usuario';
 import { UsuarioService } from '../../core/service/usuario.service';
+import { HistoricoRejeicaoService } from '../../core/service/historico-rejeicao.service';
+import { HistoricoRejeicaoItem, SolicitacaoDoacaoHistorico } from '../../core/interface/historicoRejeicao';
 
 @Component({
   selector: 'app-header',
@@ -15,17 +17,15 @@ import { UsuarioService } from '../../core/service/usuario.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  onCepBlur() {
-    throw new Error('Method not implemented.');
-  }
-
   @Input() userId: string = "";
+  historicoRejeicaoParaTabela: HistoricoRejeicaoItem[] = [];
   userDetails!: UserDetails;
   newUserLogin!: any
   items: MenuItem[] | undefined;
   visible: boolean = false;
   visibleEditPassword: boolean = false;
   visibleEditProfile: boolean = false;
+  visibleTableHistorico: boolean = false;
   formUpdatePassword!: FormGroup;
   formUpdateUser!: FormGroup;
   @ViewChild('drawerRef') drawerRef!: Drawer;
@@ -34,7 +34,9 @@ export class HeaderComponent {
     private _fb: FormBuilder,
     private _loginService: LoginService,
     private _usuarioService: UsuarioService,
-    private _snackbarService: SnackbarService) {
+    private _snackbarService: SnackbarService,
+    private _historicoRejeicaoService: HistoricoRejeicaoService
+  ) {
   }
 
   closeCallback(e: any): void {
@@ -83,6 +85,11 @@ export class HeaderComponent {
         routerLink: ['/listagem-ong-empresa']
       },
       {
+        label: 'Histórico de rejeições',
+        icon: 'pi pi pi-users',
+        command: () => this.showDialogTableHistorico()
+      },
+      {
         label: 'Perfil',
         icon: 'pi pi-search',
         items: [
@@ -107,18 +114,54 @@ export class HeaderComponent {
     ]
   }
 
+  getHistoricoRejeicoes(tipoPerfil: number | null) {
+    if (tipoPerfil === 1) {
+      this._historicoRejeicaoService.getHistoricoRejeicaoSolicitante(this.userId).subscribe({
+        next: (historicoRejeicaoResponse: SolicitacaoDoacaoHistorico[]) => {
+          this.historicoRejeicaoParaTabela = historicoRejeicaoResponse.map(item => ({
+            tipoSolicitacao: item.tipoSolicitacao,
+            dataRejeicao: item.dataRejeicao,
+            dataSolicitacao: item.dataSolicitacao,
+            email: item.usuario.email,
+            nome: item.usuario.nome,
+            cidade: item.usuario.cidade,
+            estado: item.usuario.estado
+          }));
+
+          console.log('Historico: ', this.historicoRejeicaoParaTabela);
+        }
+      })
+    } else {
+      this._historicoRejeicaoService.getHistoricoRejeicaoBeneficiado(this.userId).subscribe({
+        next: (historicoRejeicaoResponse: SolicitacaoDoacaoHistorico[]) => {
+          this.historicoRejeicaoParaTabela = historicoRejeicaoResponse.map(item => ({
+            tipoSolicitacao: item.tipoSolicitacao,
+            dataRejeicao: item.dataRejeicao,
+            dataSolicitacao: item.dataSolicitacao,
+            email: item.usuario.email,
+            nome: item.usuario.nome,
+            cidade: item.usuario.cidade,
+            estado: item.usuario.estado
+          }));
+
+          console.log('Historico: ', this.historicoRejeicaoParaTabela);
+        }
+      });
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['userId'] && changes['userId'].currentValue) {
       this.getUserDetails(this.userId);
     }
   }
 
-
   getUserDetails(userId: string) {
     this._usuarioService.getUserDetails(userId).subscribe({
       next: (responseUserDetails) => {
         this.userDetails = responseUserDetails;
         this.loadValueForm(this.userDetails);
+        this.getHistoricoRejeicoes(this.userDetails.tipoPerfil);
       }
     });
   }
@@ -246,6 +289,14 @@ export class HeaderComponent {
     } else {
       return "Doador";
     }
+  }
+
+  onCepBlur() {
+    throw new Error('Method not implemented.');
+  }
+
+  showDialogTableHistorico() {
+    this.visibleTableHistorico = true
   }
 
 }

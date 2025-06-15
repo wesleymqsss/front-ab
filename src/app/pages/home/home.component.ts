@@ -214,10 +214,10 @@ export class HomeComponent {
       this._doacoesService.realizarDoacao(id, value).subscribe({
         next: (data) => {
           this._snackbarService.showSuccess("Doação realizada com sucesso!");
-          console.log('valor do objeto', value);
+        
         }, error: (err) => {
           this._snackbarService.showError("Erro ao finalizar doação.");
-          console.log('valor do objeto', value);
+         
         }
       });
     }

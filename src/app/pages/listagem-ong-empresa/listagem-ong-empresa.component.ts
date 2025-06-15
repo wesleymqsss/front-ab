@@ -88,6 +88,7 @@ export class ListagemOngEmpresaComponent {
     const dataFormatada = this.obterDataHoraAtual();
     const value = {
       solicitante: this.userLogin.nome,
+      idSolicitante: this.userLogin.id,
       tipoSolicitacao: tipoDoacao,
       dataSolicitacao: dataFormatada
     }
