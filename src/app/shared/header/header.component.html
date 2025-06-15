@@ -275,12 +275,45 @@
 
 </p-dialog>
 
-<p-dialog *ngIf="userDetails" header="Visualizar Doações Rejeitadas Por Doador" [modal]="true"
+<p-dialog *ngIf="userDetails" header="Visualizar Doações Rejeitadas" [modal]="true"
     [breakpoints]="{ '1200px': '75vw', '575px': '90vw' }" [(visible)]="visibleTableHistorico"
     [style]="{ width: '60rem', height: '50rem'}">
 
     <div class="card-modal">
-        <p-table [value]="historicoRejeicaoParaTabela" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
+        <p-table [value]="historicoParaBeneficiado" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
+            [rowsPerPageOptions]="[5, 10, 20]">
+            <ng-template #header>
+                <tr>
+                    <th pSortableColumn="solicitante"
+                        style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Solicitante
+                        <p-sortIcon field="solicitante" />
+                    </th>
+                     <th pSortableColumn="tipoSolicitacao"
+                        style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Solicitação
+                        <p-sortIcon field="tipoSolicitacao" />
+                    </th>
+                    <th pSortableColumn="dataRejeicao"
+                        style="width:9%; background-color: var(--p-emerald-700) !important; color: #fff;">Data rejeição
+                        <p-sortIcon field="dataRejeicao" />
+                    </th>
+                    <th pSortableColumn="dataSolicitacao"
+                        style="width:12%; background-color: var(--p-emerald-700) !important; color: #fff;">Data
+                        solicitação <p-sortIcon field="dataSolicitacao" />
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-item>
+                <tr>
+                    <td>{{ item.solicitante }}</td>
+                    <td>{{ item.tipoSolicitacao }}</td>
+                    <td>{{ item.dataRejeicao | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                    <td>{{ item.dataSolicitacao | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                </tr>
+
+            </ng-template>
+        </p-table>
+
+             <p-table *ngIf="userDetails.tipoPerfil === 1" [value]="historicoRejeicaoParaTabela" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
             [rowsPerPageOptions]="[5, 10, 20]">
             <ng-template #header>
                 <tr>
@@ -318,6 +351,13 @@
                     <td>{{ item.email }}</td>
                     <td>{{ item.estado }}</td>
                     <td>{{ item.cidade }}</td>
+                    <td>{{ item.tipoSolicitacao }}</td>
+                    <td>{{ item.dataRejeicao | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                    <td>{{ item.dataSolicitacao | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                </tr>
+
+                 <tr>
+                    <td>{{ item.solicitante }}</td>          
                     <td>{{ item.tipoSolicitacao }}</td>
                     <td>{{ item.dataRejeicao | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>{{ item.dataSolicitacao | date:'dd/MM/yyyy HH:mm:ss'}}</td>

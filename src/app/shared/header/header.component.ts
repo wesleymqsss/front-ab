@@ -8,7 +8,7 @@ import { confirmarSenharIguais } from '../../validators/passwordValidators';
 import { UserDetails } from '../../core/interface/usuario';
 import { UsuarioService } from '../../core/service/usuario.service';
 import { HistoricoRejeicaoService } from '../../core/service/historico-rejeicao.service';
-import { HistoricoRejeicaoItem, SolicitacaoDoacaoHistorico } from '../../core/interface/historicoRejeicao';
+import { HistoricoRejeicaoItem, SolicitacaoBeneficiadoItem, SolicitacaoDoacaoHistorico } from '../../core/interface/historicoRejeicao';
 
 @Component({
   selector: 'app-header',
@@ -19,6 +19,7 @@ import { HistoricoRejeicaoItem, SolicitacaoDoacaoHistorico } from '../../core/in
 export class HeaderComponent {
   @Input() userId: string = "";
   historicoRejeicaoParaTabela: HistoricoRejeicaoItem[] = [];
+  historicoParaBeneficiado: SolicitacaoBeneficiadoItem[] = [];
   userDetails!: UserDetails;
   newUserLogin!: any
   items: MenuItem[] | undefined;
@@ -134,14 +135,11 @@ export class HeaderComponent {
     } else {
       this._historicoRejeicaoService.getHistoricoRejeicaoBeneficiado(this.userId).subscribe({
         next: (historicoRejeicaoResponse: SolicitacaoDoacaoHistorico[]) => {
-          this.historicoRejeicaoParaTabela = historicoRejeicaoResponse.map(item => ({
+          this.historicoParaBeneficiado  = historicoRejeicaoResponse.map(item => ({
+            solicitante: item.solicitante,
             tipoSolicitacao: item.tipoSolicitacao,
-            dataRejeicao: item.dataRejeicao,
             dataSolicitacao: item.dataSolicitacao,
-            email: item.usuario.email,
-            nome: item.usuario.nome,
-            cidade: item.usuario.cidade,
-            estado: item.usuario.estado
+            dataRejeicao: item.dataRejeicao
           }));
 
           console.log('Historico: ', this.historicoRejeicaoParaTabela);
