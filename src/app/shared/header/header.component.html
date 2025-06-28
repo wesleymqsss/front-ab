@@ -277,10 +277,10 @@
 
 <p-dialog *ngIf="userDetails" header="Visualizar Doações Rejeitadas" [modal]="true"
     [breakpoints]="{ '1200px': '75vw', '575px': '90vw' }" [(visible)]="visibleTableHistorico"
-    [style]="{ width: '60rem', height: '50rem'}">
+    >
 
     <div class="card-modal">
-        <p-table [value]="historicoParaBeneficiado" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
+        <p-table class="teste1" *ngIf="userDetails.tipoPerfil === 2"  [value]="historicoParaBeneficiado" [paginator]="true" [rows]="5"
             [rowsPerPageOptions]="[5, 10, 20]">
             <ng-template #header>
                 <tr>
@@ -313,7 +313,7 @@
             </ng-template>
         </p-table>
 
-             <p-table *ngIf="userDetails.tipoPerfil === 1" [value]="historicoRejeicaoParaTabela" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
+             <p-table class="teste2" *ngIf="userDetails.tipoPerfil === 1" [value]="historicoRejeicaoParaTabela" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }"
             [rowsPerPageOptions]="[5, 10, 20]">
             <ng-template #header>
                 <tr>
@@ -356,12 +356,7 @@
                     <td>{{ item.dataSolicitacao | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                 </tr>
 
-                 <tr>
-                    <td>{{ item.solicitante }}</td>          
-                    <td>{{ item.tipoSolicitacao }}</td>
-                    <td>{{ item.dataRejeicao | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-                    <td>{{ item.dataSolicitacao | date:'dd/MM/yyyy HH:mm:ss'}}</td>
-                </tr>
+                
             </ng-template>
         </p-table>
     </div>
