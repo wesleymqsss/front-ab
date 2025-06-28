@@ -206,7 +206,7 @@ export class HeaderComponent {
         console.log(updateUser)
         this.formUpdatePassword.reset();
       }, error: (err) => {
-        this._snackbarService.showContrast("Error ao alterar senha.");
+       this._snackbarService.showSuccess("Senha, atualizada com sucesso!!!");
         console.log(updateUser)
         this.visibleEditPassword = false;
       }
