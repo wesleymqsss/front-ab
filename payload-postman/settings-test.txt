@@ -1,0 +1,29 @@
+numero do cartao de teste mercado pago - 5031 4332 1540 6351
+codigo seguranca - 123
+data vencimento - 11/30
+
+token acesso - TEST-bb33b2d6-bb24-47d3-b225-5795214a37a8
+
+payload para https://api.mercadopago.com/v1/card_tokens?public_key=TEST-bb33b2d6-bb24-47d3-b225-5795214a37a8
+{
+    "card_number": "4242424242424242",
+    "expiration_year": "2028",
+    "expiration_month": "12",
+    "security_code": "123",
+    "cardholder": {
+        "name": "APRO",
+        "identification": {
+            "type": "CPF",
+            "number": "12345678909"
+        }
+    }
+}
+
+payload para api  de pagamento http://localhost:8080/pagamento/cartao
+{
+    "token": "8cbbabd93996bb4d43b9eff501067786",
+    "valorTransacao": 50.00,
+    "descricao": "Teste final com comprador correto",
+    "parcelas": 1,
+    "emailPagador": "wesleymqsss@gmail.com" 
+}
