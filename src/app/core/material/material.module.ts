@@ -28,7 +28,7 @@ import { ChartModule } from 'primeng/chart';
 import { StepperModule } from 'primeng/stepper';
 import { FloatLabel } from 'primeng/floatlabel';
 import { Select } from 'primeng/select';
-
+import { InputNumber } from 'primeng/inputnumber';
 @NgModule({
   imports: [
     FocusTrapModule,
@@ -64,7 +64,8 @@ import { Select } from 'primeng/select';
     ChartModule,
     StepperModule,
     FloatLabel,
-    Select
+    Select,
+    InputNumber
   ],
   exports: [
     FocusTrapModule,
@@ -100,7 +101,8 @@ import { Select } from 'primeng/select';
     ChartModule,
     StepperModule,
     FloatLabel,
-    Select
+    Select,
+    InputNumber
   ]
 })
 export class MaterialModule { }

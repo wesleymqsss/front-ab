@@ -19,7 +19,7 @@
     </div>
 
     <div class="carrousel-cont">
-      <p-carousel [value]="dataSource" [numVisible]="4" [numScroll]="1" [circular]="true"
+      <p-carousel [value]="doacoesResponse" [numVisible]="4" [numScroll]="1" [circular]="true"
         [responsiveOptions]="responsiveOptions" [autoplayInterval]="0">
 
         <ng-template pTemplate="item" let-item>
@@ -60,7 +60,7 @@
     </div>
 
     <div class="carrousel-cont">
-      <p-carousel [value]="dataSource" [numVisible]="4" [numScroll]="1" [circular]="true"
+      <p-carousel [value]="solicitacoesResponse" [numVisible]="4" [numScroll]="1" [circular]="true"
         [responsiveOptions]="responsiveOptions" [autoplayInterval]="0">
 
         <ng-template pTemplate="item" let-item>
@@ -72,7 +72,6 @@
                   <strong>Data:</strong> {{ item.dataSolicitacao | date: 'dd/MM/yyyy' }} <br>
                   <strong>Hora:</strong> {{ item.dataSolicitacao | date: 'HH:mm' }}
                 </p>
-                
                 <button pButton type="button" icon="pi pi-thumbs-up-fill" label="Realizar Doação" class="botao"
                   (click)="realizarDoacao(item.usuario.id, item.tipoSolicitacao)"></button>
                 <button pButton type="button" icon="pi pi-thumbs-down-fill" label="Rejeitar Pedido de Doação" class="botao"

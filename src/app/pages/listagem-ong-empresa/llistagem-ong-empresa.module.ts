@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ListagemOngEmpresaComponent } from './listagem-ong-empresa.component';
 import { ListagemOngEmpresaRoutingModule } from './listagem-ong-empresa-routing.module';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -15,8 +16,9 @@ import { ListagemOngEmpresaRoutingModule } from './listagem-ong-empresa-routing.
     MaterialModule,
     SharedModule,
     ListagemOngEmpresaRoutingModule,
-    PipesModule 
-  ],
+    PipesModule,
+    ReactiveFormsModule
+],
   exports: [
     ListagemOngEmpresaComponent
   ]

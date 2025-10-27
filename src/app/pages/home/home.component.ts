@@ -21,7 +21,8 @@ export class HomeComponent {
   responsiveOptions: any[] | undefined;
   doacoes!: CardDoacoes[];
   visible: boolean = false;
-  dataSource: any[] = [];
+  doacoesResponse: any[] = [];
+  solicitacoesResponse: any[] = [];
 
   constructor(
     private readonly _activatedRoute: ActivatedRoute,
@@ -137,8 +138,8 @@ export class HomeComponent {
   ultimasDoacoes(id: string) {
     this._doacoesService.getDoacoesCard(id).subscribe({
       next: (doacoesResponse) => {
-        this.dataSource = doacoesResponse;
-        console.log(this.dataSource);
+        this.doacoesResponse = doacoesResponse;
+        console.log(this.doacoesResponse);
       }
     });
   }
@@ -146,8 +147,8 @@ export class HomeComponent {
   ultimasSolicitacoes(id: string) {
     this._solicitacaoDoacaoService.getSolicitacoesCard(id).subscribe({
       next: (solicitacaoDoacaoResponse) => {
-        this.dataSource = solicitacaoDoacaoResponse;
-        console.log(this.dataSource)
+        this.solicitacoesResponse = solicitacaoDoacaoResponse;
+        console.log(this.solicitacoesResponse)
       }
     });
   }
